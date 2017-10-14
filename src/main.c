@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:53:30 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/14 13:45:42 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/14 16:33:00 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,25 @@ int		main(int ac, char **av)
 	struct	load_command	*lc;
 	struct	symtab_command	*sc;
 	struct	segment_command_64	*sg;
-	struct	section_64	*section;
 	struct	nlist_64		*symbol_table;
 	int						type;
 	int						i;
 	int						j;
+	union u_section
+	{
+		struct	section_64	sec_64;
+		struct	section		sec_32;
+	};
+
+	union segment_cmd
+	{
+		struct	segment_command_64	seg_64;
+		struct	segment_command		seg_32;
+	};
+
+	union u_section			*union_section;
+	//union segment_cmd		*segment_cmd;
+
 
 	i = 0;
 	if (ac == 0)
@@ -39,7 +53,7 @@ int		main(int ac, char **av)
 	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
 			== MAP_FAILED)
 		return -1;
-	printf("filesize == %lld sgmt cmd siize %lu\n", buf.st_size, sizeof(struct segment_command_64));
+	printf("filesize == %lld sgmt cmd siize %lu && %lu && %lu\n", buf.st_size, sizeof(struct segment_command_64), sizeof(struct segment_command), sizeof(union segment_cmd));
 	magic_number = *(int *)ptr;
 	header = (struct mach_header_64 *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header_64);
@@ -50,14 +64,20 @@ int		main(int ac, char **av)
 			sg = (struct segment_command_64 *)lc;
 			printf("segment name ===> %s && size %u $$$ filesoze -- %llu &&& file of -> %llu && bn sections == %u\n", sg->segname, sg->cmdsize, sg->filesize, sg->fileoff, sg->nsects);
 
-			section = (void*)sg;
+			union_section = (void*)sg;
 
-			section = (void*)sg + sizeof(struct segment_command_64);
+			union_section = (void*)sg + sizeof(struct segment_command_64);
+			dprintf(1, "%p \n", union_section);
+			union_section = (union u_section *)(sg + 1);
+			dprintf(1, "%p \n", union_section);
+			union_section = (void*)sg + sizeof(union segment_cmd);
+			dprintf(1, "%p \n", union_section);
 
 			j = 0;
 			while (j < (int)sg->nsects)
 			{
-				printf("section name ==> 		%s\n", section[j].sectname);
+				char *str = union_section->sec_64.sectname;
+				printf("union_section name ==> 		%s\n", str);
 				j++;
 			}
 		}
