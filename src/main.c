@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:53:30 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/14 13:34:44 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/14 13:45:42 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,13 @@ int		main(int ac, char **av)
 			printf("segment name ===> %s && size %u $$$ filesoze -- %llu &&& file of -> %llu && bn sections == %u\n", sg->segname, sg->cmdsize, sg->filesize, sg->fileoff, sg->nsects);
 
 			section = (void*)sg;
-			printf("base addr %p size == %d\n", section, (int)sizeof(*sg));
 
-			section = (void*)sg + sizeof(*sg);
-			printf("%p\n", section);
-			section = (struct section_64 *)(sg + 1);
-			printf("%p\n", section);
+			section = (void*)sg + sizeof(struct segment_command_64);
 
 			j = 0;
 			while (j < (int)sg->nsects)
 			{
-				printf("section name ==> %s\n", section[j].sectname);
+				printf("section name ==> 		%s\n", section[j].sectname);
 				j++;
 			}
 		}
