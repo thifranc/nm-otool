@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:53:30 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/13 15:44:01 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/14 13:34:44 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int		main(int ac, char **av)
 	struct	mach_header_64	*header;
 	struct	load_command	*lc;
 	struct	symtab_command	*sc;
+	struct	segment_command_64	*sg;
+	struct	section_64	*section;
 	struct	nlist_64		*symbol_table;
 	int						type;
 	int						i;
@@ -37,11 +39,32 @@ int		main(int ac, char **av)
 	if ((ptr = mmap(0, buf.st_size, PROT_READ, MAP_PRIVATE, fd, 0))
 			== MAP_FAILED)
 		return -1;
+	printf("filesize == %lld sgmt cmd siize %lu\n", buf.st_size, sizeof(struct segment_command_64));
 	magic_number = *(int *)ptr;
 	header = (struct mach_header_64 *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header_64);
 	while (i < (int)header->ncmds)
 	{
+		if (lc->cmd == LC_SEGMENT_64)
+		{
+			sg = (struct segment_command_64 *)lc;
+			printf("segment name ===> %s && size %u $$$ filesoze -- %llu &&& file of -> %llu && bn sections == %u\n", sg->segname, sg->cmdsize, sg->filesize, sg->fileoff, sg->nsects);
+
+			section = (void*)sg;
+			printf("base addr %p size == %d\n", section, (int)sizeof(*sg));
+
+			section = (void*)sg + sizeof(*sg);
+			printf("%p\n", section);
+			section = (struct section_64 *)(sg + 1);
+			printf("%p\n", section);
+
+			j = 0;
+			while (j < (int)sg->nsects)
+			{
+				printf("section name ==> %s\n", section[j].sectname);
+				j++;
+			}
+		}
 		if (lc->cmd == LC_SYMTAB)
 		{
 			sc = (struct symtab_command *)lc;
