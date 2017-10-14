@@ -6,7 +6,7 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/10/12 19:26:21 by thifranc         ###   ########.fr        #
+#    Updated: 2017/10/14 16:55:59 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = nm
 
 INC = nm-otool
 
-SRCS = main
+SRCS = main_64
 
 SRC_DIR = src/
 
