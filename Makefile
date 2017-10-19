@@ -6,45 +6,58 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/10/14 16:55:59 by thifranc         ###   ########.fr        #
+#    Updated: 2017/10/19 09:43:02 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = nm
-
-INC = nm-otool
-
-SRCS = main_64
-
 SRC_DIR = src/
-
 INC_DIR = include/
 
-SRCS:= $(addsuffix .c, $(SRCS))
-SRCS:= $(addprefix $(SRC_DIR), $(SRCS))
+#executables name
+NM = ft_nm
+OTOOL = ft_otool
 
-INC:= $(addsuffix .h, $(INC))
-INC:= $(addprefix $(INC_DIR), $(INC))
+#includes and srcs
+INC_NM = nm
+SRCS_NM = main_32
 
-OBJ = $(SRCS:%.c=%.o)
+INC_OTOOL = otool
+SRCS_OTOOL = main_64
 
+#prefix and suffix
+SRCS_NM:= $(addsuffix .c, $(SRCS_NM))
+SRCS_NM:= $(addprefix $(SRC_DIR), $(SRCS_NM))
+INC_NM:= $(addsuffix .h, $(INC_NM))
+INC_NM:= $(addprefix $(INC_DIR), $(INC_NM))
+OBJ_NM = $(SRCS_NM:%.c=%.o)
+
+SRCS_OTOOL:= $(addsuffix .c, $(SRCS_OTOOL))
+SRCS_OTOOL:= $(addprefix $(SRC_DIR), $(SRCS_OTOOL))
+INC_OTOOL:= $(addsuffix .h, $(INC_OTOOL))
+INC_OTOOL:= $(addprefix $(INC_DIR), $(INC_OTOOL))
+OBJ_OTOOL = $(SRCS_OTOOL:%.c=%.o)
+
+#compilation flags
 FLAGS = -Wall -Werror -Wextra
 
 OPT_FLAGS = 
 
-all: $(NAME)
+all: $(NM) $(OTOOL)
 
-$(NAME):
-	gcc $(FLAGS) $(SRCS) -I$(INC) -o $(NAME) $(OPT_FLAGS)
+$(NM):
+	gcc $(FLAGS) $(SRCS_NM) -I$(INC_NM) -o $(NM) $(OPT_FLAGS)
+
+$(OTOOL):
+	gcc $(FLAGS) $(SRCS_OTOOL) -I$(INC_OTOOL) -o $(OTOOL) $(OPT_FLAGS)
 
 clean:
-	@$(RM) $(OBJ)
+	@$(RM) $(OBJ_NM)
+	@$(RM) $(OBJ_OTOOL)
 	@echo "erasing all binary files"
 
 fclean: clean
-	@$(RM) $(NAME)
+	@$(RM) $(OTOOL) $(NM)
 	@make clean -C libft/
-	@echo "erasing $(NAME)"
 
 re: fclean all
 	@make fclean -C libft/

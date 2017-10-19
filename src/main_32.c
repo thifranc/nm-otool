@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:53:30 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/14 16:51:20 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/19 09:43:41 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/nm-otool.h"
+#include "../include/nm.h"
 
 int		main(int ac, char **av)
 {
@@ -67,11 +67,13 @@ int		main(int ac, char **av)
 			union_section = (void*)sg;
 
 			union_section = (void*)sg + sizeof(struct segment_command);
-			dprintf(1, "%p \n", union_section);
+			dprintf(1, "%p  && %s\n", union_section, union_section->sec_32.sectname);
 			union_section = (union u_section *)(sg + 1);
-			dprintf(1, "%p \n", union_section);
-			//union_section = (void*)sg + sizeof(union segment_cmd);
-			dprintf(1, "%p \n", union_section);
+			dprintf(1, "%p  && %s\n", union_section, union_section->sec_32.sectname);
+			union_section = (void*)sg + sizeof(sg);
+			dprintf(1, "%p  && %s\n", union_section, union_section->sec_32.sectname);
+			union_section = (void*)sg + sizeof(union segment_cmd);
+			dprintf(1, "%p  && %s\n", union_section, union_section->sec_32.sectname);
 
 			j = 0;
 			while (j < (int)sg->nsects)

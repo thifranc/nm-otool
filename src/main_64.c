@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:53:30 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/14 16:33:00 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/19 10:27:06 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/nm-otool.h"
+#include "../include/nm.h"
 
 int		main(int ac, char **av)
 {
@@ -59,6 +59,7 @@ int		main(int ac, char **av)
 	lc = (void *)ptr + sizeof(struct mach_header_64);
 	while (i < (int)header->ncmds)
 	{
+
 		if (lc->cmd == LC_SEGMENT_64)
 		{
 			sg = (struct segment_command_64 *)lc;
