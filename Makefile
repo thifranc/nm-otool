@@ -6,7 +6,7 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/10/19 09:43:02 by thifranc         ###   ########.fr        #
+#    Updated: 2017/10/23 11:59:35 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,10 @@ OTOOL = ft_otool
 
 #includes and srcs
 INC_NM = nm
-SRCS_NM = main_32
+SRCS_NM = main parser
 
 INC_OTOOL = otool
-SRCS_OTOOL = main_64
+SRCS_OTOOL = 
 
 #prefix and suffix
 SRCS_NM:= $(addsuffix .c, $(SRCS_NM))
@@ -49,6 +49,9 @@ $(NM):
 
 $(OTOOL):
 	gcc $(FLAGS) $(SRCS_OTOOL) -I$(INC_OTOOL) -o $(OTOOL) $(OPT_FLAGS)
+
+nm: $(NM)
+otool: $(OTOOL)
 
 clean:
 	@$(RM) $(OBJ_NM)

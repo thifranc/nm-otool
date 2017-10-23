@@ -1,20 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error.c                                            :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/23 15:05:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/23 15:10:23 by thifranc         ###   ########.fr       */
+/*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
+/*   Updated: 2017/10/23 17:15:26 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/nm.h"
 
-int		error(int flag)
+int		main(int ac, char **av)
 {
-	if (flag == ERR_MULTI_OPT)
-		dprintf(1, "err is ERR_MULTI_OPT");
-	return (1);
+	int		options;
+	int		i;
+
+	i = 1;
+	if (ac == 1)
+	{
+		av[1] = "a.out";
+		ac = 2;
+	}
+	if ((options = parser(ac, av)) == ERR_MULTI_OPT)
+		return error(ERR_MULTI_OPT);
+	while (i < ac)
+	{
+		if (av[i][0] != '-')
+			handle_macho(av[i], options);
+		i++;
+	}
+	return (0);
 }
