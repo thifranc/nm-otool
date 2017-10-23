@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/23 17:27:56 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/23 18:53:12 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,13 @@
 # include <mach-o/nlist.h>
 # include <ar.h>
 
+# define DEBUG dprintf(1, "- %s - %s\n" \
+		, __FILE__, __FUNCTION__);
+
 int		parser(int ac, char **av);
 void	printBits(size_t const size, void const * const ptr);
-int		error(int flag);
+int		handle_error(int flag);
+int		handle_macho(char *file, int options);
+int		handle_64(char *title, char *ptr, int options);
 
 #endif

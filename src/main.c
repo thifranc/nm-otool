@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/23 17:15:26 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/23 18:40:48 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		main(int ac, char **av)
 {
+	DEBUG
 	int		options;
 	int		i;
 
@@ -24,7 +25,7 @@ int		main(int ac, char **av)
 		ac = 2;
 	}
 	if ((options = parser(ac, av)) == ERR_MULTI_OPT)
-		return error(ERR_MULTI_OPT);
+		return handle_error(ERR_MULTI_OPT);
 	while (i < ac)
 	{
 		if (av[i][0] != '-')

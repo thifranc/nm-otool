@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/23 17:36:10 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/23 18:40:48 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,24 @@
 
 char	get_options(char *arg)
 {
+	DEBUG
 	int 	i;
 	char	opt;
 
 	i = 0;
+	opt = 0;
 	while (arg[i])
 	{
 		if (arg[i] == 'r')
-			opt & OPT_R ? return(ERR_MULTI_OPT) :  opt = opt | OPT_R;
+			opt = opt & OPT_R ? (char)ERR_MULTI_OPT :  opt | OPT_R;
 		else if (arg[i] == 'j')
-			opt & OPT_J ? return(ERR_MULTI_OPT) :  opt = opt | OPT_J;
+			opt = opt & OPT_J ? (char)ERR_MULTI_OPT :  opt | OPT_J;
 		else if (arg[i] == 'u')
-			opt & OPT_U ? return(ERR_MULTI_OPT) :  opt = opt | OPT_U;
+			opt = opt & OPT_U ? (char)ERR_MULTI_OPT :  opt | OPT_U;
 		else if (arg[i] == 'p')
-			opt & OPT_P ? return(ERR_MULTI_OPT) :  opt = opt | OPT_P;
+			opt = opt & OPT_P ? (char)ERR_MULTI_OPT :  opt | OPT_P;
 		else if (arg[i] == 'n')
-			opt & OPT_N ? return(ERR_MULTI_OPT) :  opt = opt | OPT_N;
+			opt = opt & OPT_N ? (char)ERR_MULTI_OPT :  opt | OPT_N;
 		i++;
 	}
 	return (opt);
@@ -38,6 +40,7 @@ char	get_options(char *arg)
 //assumes little endian
 void	printBits(size_t const size, void const * const ptr)
 {
+	DEBUG
     unsigned char *b = (unsigned char*) ptr;
     unsigned char byte;
     int i, j;
@@ -56,6 +59,7 @@ void	printBits(size_t const size, void const * const ptr)
 
 int		parser(int ac, char **av)
 {
+	DEBUG
 	int i;
 	char options; 
 	int both;
@@ -67,7 +71,7 @@ int		parser(int ac, char **av)
 		{
 			dprintf(1, "this is options : %s\n", av[i]);
 			options = get_options(av[i] + 1);
-			if (options == ERR_MULTI_OPT)
+			if ((unsigned char)options == ERR_MULTI_OPT)
 				return (ERR_MULTI_OPT);
 		}
 		i++;

@@ -6,7 +6,7 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/10/23 11:59:35 by thifranc         ###   ########.fr        #
+#    Updated: 2017/10/23 18:35:38 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OTOOL = ft_otool
 
 #includes and srcs
 INC_NM = nm
-SRCS_NM = main parser
+SRCS_NM = main parser macho_header handle_64 error
 
 INC_OTOOL = otool
 SRCS_OTOOL = 
