@@ -6,7 +6,7 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/10/23 18:35:38 by thifranc         ###   ########.fr        #
+#    Updated: 2017/10/24 13:53:41 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ OPT_FLAGS =
 all: $(NM) $(OTOOL)
 
 $(NM):
-	gcc $(FLAGS) $(SRCS_NM) -I$(INC_NM) -o $(NM) $(OPT_FLAGS)
+	gcc $(FLAGS) $(SRCS_NM) libft/libft.a -I$(INC_NM) -o $(NM) $(OPT_FLAGS)
 
 $(OTOOL):
 	gcc $(FLAGS) $(SRCS_OTOOL) -I$(INC_OTOOL) -o $(OTOOL) $(OPT_FLAGS)

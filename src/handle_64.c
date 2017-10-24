@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/23 18:52:36 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/24 14:08:30 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	symtab_64(struct symtab_command *sc, char *ptr)
 	while (j < (int)sc->nsyms)
 	{
 		if (symbol_table[j].n_value)
-			printf("%016llx ", symbol_table[j].n_value);
+			ft_putstr(ft_ptrf("%0*x ", symbol_table[j].n_value, 16));
 		else
 			printf("                 ");
 		type = symbol_table[j].n_type & N_TYPE;
 		if (type == N_UNDF || type == N_PBUD)
-			printf("U  ");
+			ft_putstr(ft_ptrf("U  "));
 		if (type == N_SECT)
 			printf("T  ");
 		printf("%s\n", stringtable + symbol_table[j].n_un.n_strx);

@@ -6,12 +6,12 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/23 18:53:12 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/24 13:44:10 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FT_LIBFT_H
-# define FT_LIBFT_H
+#ifndef FT_NM_H
+# define FT_NM_H
 
 #define ERR_MULTI_OPT 128
 #define ERR_OPEN 1
@@ -27,6 +27,7 @@
 #define TO_SWAP 32
 #define IS_32 64
 
+# include "../libft/libft.h"
 # include <stdlib.h>
 # include <stdio.h>
 # include <unistd.h>

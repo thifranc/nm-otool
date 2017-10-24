@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/23 18:40:48 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/24 12:44:14 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int		parser(int ac, char **av)
 	{
 		if (av[i][0] == '-')
 		{
-			dprintf(1, "this is options : %s\n", av[i]);
+			ft_putstr(ft_ptrf( "this is options : %s\n", av[i]));
 			options = get_options(av[i] + 1);
 			if ((unsigned char)options == ERR_MULTI_OPT)
 				return (ERR_MULTI_OPT);
