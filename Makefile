@@ -19,7 +19,7 @@ OTOOL = ft_otool
 
 #includes and srcs
 INC_NM = nm
-SRCS_NM = main parser macho_header handle_64 error
+SRCS_NM = main parser handle_macho handle_64 error
 
 INC_OTOOL = otool
 SRCS_OTOOL = 
