@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/24 13:44:10 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/25 15:59:11 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 #define ERR_FSTAT 2
 #define ERR_MMAP 4
 #define ERR_MAGIC 8
+#define ERR_MALLOC 16
 
 #define OPT_R 1
 #define OPT_P 2
@@ -46,5 +47,7 @@ void	printBits(size_t const size, void const * const ptr);
 int		handle_error(int flag);
 int		handle_macho(char *file, int options);
 int		handle_64(char *title, char *ptr, int options);
+int		handle_32(char *title, char *ptr, int options);
+char	*get_type(int type);
 
 #endif

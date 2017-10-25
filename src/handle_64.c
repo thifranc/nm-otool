@@ -6,37 +6,49 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/24 14:08:30 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/25 15:00:03 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/nm.h"
 
-void	symtab_64(struct symtab_command *sc, char *ptr)
+int		symtab_64(struct symtab_command *sc, char *ptr, char ***all_string)
 {
 	DEBUG
-	struct	nlist_64		*symbol_table;
-	char					*stringtable;
-	int						type;
-	int						j;
+	struct	nlist_64	*symbol_table;
+	char				*stringtable;
+	int					type;
+	int					j;
 
-	j = 0;
+	if (!(*all_string = (char**)malloc(sizeof(char *) * sc->nsyms)))
+		return (ERR_MALLOC);
+
 	symbol_table = (void *)ptr + sc->symoff;
 	stringtable = (void *)ptr + sc->stroff;
+
+	j = 0;
 	while (j < (int)sc->nsyms)
 	{
-		if (symbol_table[j].n_value)
-			ft_putstr(ft_ptrf("%0*x ", symbol_table[j].n_value, 16));
-		else
-			printf("                 ");
+		
+		if (!((*all_string)[j] = (char*)malloc(sizeof(char)
+			* (19 + ft_strlen(stringtable + symbol_table[j].n_un.n_strx)))))
+			return (ERR_MALLOC);
 		type = symbol_table[j].n_type & N_TYPE;
-		if (type == N_UNDF || type == N_PBUD)
-			ft_putstr(ft_ptrf("U  "));
-		if (type == N_SECT)
-			printf("T  ");
-		printf("%s\n", stringtable + symbol_table[j].n_un.n_strx);
+
+		(*all_string)[j] = ft_ptrf("%s %s %s\n",
+			symbol_table[j].n_value ?
+				ft_ptrf("%0*x", symbol_table[j].n_value, 16) :
+				"                ",
+			get_type(type), stringtable + symbol_table[j].n_un.n_strx);
 		j++;
 	}
+	j = 0;
+	while (j < (int)sc->nsyms)
+	{
+		dprintf(1, "%s", (*all_string)[j]);
+		j++;
+	}
+	return (0);
 }
 
 int		handle_64(char *title, char *ptr, int options)
@@ -45,6 +57,7 @@ int		handle_64(char *title, char *ptr, int options)
 	struct	mach_header_64	*header;
 	struct	load_command	*lc;
 	int						i;
+	char					**output;
 
 	dprintf(1, "%s, %d\n", title, options);
 	header = (struct mach_header_64 *)ptr;
@@ -55,7 +68,7 @@ int		handle_64(char *title, char *ptr, int options)
 	{
 		if (lc->cmd == LC_SYMTAB)
 		{
-			symtab_64((struct symtab_command *)lc, ptr);
+			symtab_64((struct symtab_command *)lc, ptr, &output);
 		}
 		lc = (void *)lc + lc->cmdsize;
 		i++;

@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/23 17:50:18 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/25 14:12:00 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	symtab_32(struct symtab_command *sc, char *ptr)
 	DEBUG
 	struct	nlist	*symbol_table;
 	char			*stringtable;
+	char			*address;
 	int				type;
 	int				j;
 
@@ -25,16 +26,15 @@ void	symtab_32(struct symtab_command *sc, char *ptr)
 	stringtable = (void *)ptr + sc->stroff;
 	while (j < (int)sc->nsyms)
 	{
-		if (symbol_table[j].n_value)
-			ft_putstr(ft_ptrf("%0*x ", symbol_table[j].n_value, 8));
-		else
-			printf("                 ");
+		
+		address = symbol_table[j].n_value ?
+			ft_ptrf("%0*x", symbol_table[j].n_value, 8) :
+			"        ";
+
 		type = symbol_table[j].n_type & N_TYPE;
-		if (type == N_UNDF || type == N_PBUD)
-			ft_putstr(ft_ptrf("U  "));
-		if (type == N_SECT)
-			printf("T  ");
-		printf("%s\n", stringtable + symbol_table[j].n_un.n_strx);
+
+		ft_putstr(ft_ptrf("%s %s %s\n", address, get_type(type), stringtable
+				+ symbol_table[j].n_un.n_strx));
 		j++;
 	}
 }
@@ -42,7 +42,7 @@ void	symtab_32(struct symtab_command *sc, char *ptr)
 int		handle_32(char *title, char *ptr, int options)
 {
 	DEBUG
-	struct	mach_header		*header;
+		struct	mach_header		*header;
 	struct	load_command	*lc;
 	int						i;
 

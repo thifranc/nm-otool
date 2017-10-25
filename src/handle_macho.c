@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 14:48:06 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/24 14:48:12 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/25 15:35:02 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,19 @@ char	open_file(char *file, char **ptr)
 	return (0);
 }
 
+char	*get_type(int type)
+{
+	char	*n_type;
+
+	if (type == N_UNDF || type == N_PBUD)
+		n_type = "U";
+	if (type == N_SECT)
+		n_type = "T";
+	if (type == N_ABS)
+		n_type = "A";
+	return (n_type);
+}
+
 int		handle_macho(char *file, int options)
 {
 	DEBUG
@@ -61,11 +74,10 @@ int		handle_macho(char *file, int options)
 			(error_code = macho_config(ptr, &options)) != 0)
 		handle_error(error_code);
 
-	/*
+	printBits(sizeof(options), &options);
 	if (options & IS_32)
-		handle_32(file, &ptr, options);
+		handle_32(file, ptr, options);
 	else
-	*/
 		handle_64(file, ptr, options);
 	return (0);
 }
