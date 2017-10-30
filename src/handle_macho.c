@@ -6,13 +6,13 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 14:48:06 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/25 15:35:02 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/30 16:31:50 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/nm.h"
 
-char	macho_config(char *ptr, int *options)
+char	macho_config(char *ptr, unsigned char *options)
 {
 	DEBUG
 	unsigned int	magic_number;
@@ -63,7 +63,7 @@ char	*get_type(int type)
 	return (n_type);
 }
 
-int		handle_macho(char *file, int options)
+int		handle_macho(char *file, t_a g)
 {
 	DEBUG
 	char	*ptr;
@@ -71,13 +71,13 @@ int		handle_macho(char *file, int options)
 
 
 	if ((error_code = open_file(file, &ptr)) != 0 ||
-			(error_code = macho_config(ptr, &options)) != 0)
+			(error_code = macho_config(ptr, &(g.opt))) != 0)
 		handle_error(error_code);
 
-	printBits(sizeof(options), &options);
-	if (options & IS_32)
-		handle_32(file, ptr, options);
+	printBits(sizeof(g.opt), &(g.opt));
+	if (g.opt & IS_32)
+		handle_32(file, ptr, g);
 	else
-		handle_64(file, ptr, options);
+		handle_64(file, ptr, g);
 	return (0);
 }

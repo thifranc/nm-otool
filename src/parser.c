@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/30 15:16:47 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/30 16:50:48 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,15 @@ int		parser(int ac, char **av)
 {
 	DEBUG
 	int i;
+	int j;
 	char options; 
 
-	i = 0;
+	i = 1;
+	options = 0;
 	while (i < ac)
 	{
-		j = i + 1;
-		while (j++ < ac)
+		j = i;
+		while (++j < ac)
 			if (ft_strcmp(av[i], av[j]) == 0)
 				return (ERR_SAME_ARG);
 		if (av[i][0] == '-')

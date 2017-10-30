@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/30 16:18:42 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/30 16:43:21 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,14 @@
 #define TO_SWAP 32
 #define IS_32 64
 
+typedef struct s_a {
+	unsigned char	opt;
+	//unsigned char	n_sect;
+	unsigned char	data_sec;
+	unsigned char	text_sec;
+	unsigned char	bss_sec;
+} t_a;
+
 # include "../libft/libft.h"
 # include <stdlib.h>
 # include <stdio.h>
@@ -46,9 +54,9 @@
 int		parser(int ac, char **av);
 void	printBits(size_t const size, void const * const ptr);
 int		handle_error(int flag);
-int		handle_macho(char *file, int options);
-int		handle_64(char *title, char *ptr, int options);
-int		handle_32(char *title, char *ptr, int options);
+int		handle_macho(char *file, t_a g);
+int		handle_64(char *title, char *ptr, t_a g);
+int		handle_32(char *title, char *ptr, t_a g);
 char	*get_type(int type);
 
 #endif

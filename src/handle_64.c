@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/25 15:00:03 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/30 16:29:26 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int		symtab_64(struct symtab_command *sc, char *ptr, char ***all_string)
 	return (0);
 }
 
-int		handle_64(char *title, char *ptr, int options)
+int		handle_64(char *title, char *ptr, t_a g)
 {
 	DEBUG
 	struct	mach_header_64	*header;
@@ -59,7 +59,7 @@ int		handle_64(char *title, char *ptr, int options)
 	int						i;
 	char					**output;
 
-	dprintf(1, "%s, %d\n", title, options);
+	dprintf(1, "%s, %d\n", title, g.opt);
 	header = (struct mach_header_64 *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header_64);
 
