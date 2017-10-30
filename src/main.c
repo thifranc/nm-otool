@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/23 18:40:48 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/30 15:16:01 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ int		main(int ac, char **av)
 		av[1] = "a.out";
 		ac = 2;
 	}
-	if ((options = parser(ac, av)) == ERR_MULTI_OPT)
+	if (((unsigned char)options = parser(ac, av)) >= ERR_MULTI_OPT)
 		return handle_error(ERR_MULTI_OPT);
 	while (i < ac)
 	{

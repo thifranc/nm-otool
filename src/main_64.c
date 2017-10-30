@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:53:30 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/24 12:43:44 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/30 14:58:48 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,21 +27,9 @@ int		main(int ac, char **av)
 	int						type;
 	int						i;
 	int						j;
-	union u_section
-	{
-		struct	section_64	sec_64;
-		struct	section		sec_32;
-	};
-
-	union segment_cmd
-	{
-		struct	segment_command_64	seg_64;
-		struct	segment_command		seg_32;
-	};
+	struct	section_64	*sec_64;
 
 	union u_section			*union_section;
-	//union segment_cmd		*segment_cmd;
-
 
 	i = 0;
 	if (ac == 0)
@@ -60,24 +48,22 @@ int		main(int ac, char **av)
 	while (i < (int)header->ncmds)
 	{
 
-		/*
 		if (lc->cmd == LC_SEGMENT_64)
 		{
 			sg = (struct segment_command_64 *)lc;
+			char *segname = sg->segname;
 
-			union_section = (void*)sg;
-
-			union_section = (void*)sg + sizeof(struct segment_command_64);
+			sec_64 = (void*)sg + sizeof(struct segment_command_64);
 
 			j = 0;
 			while (j < (int)sg->nsects)
 			{
-				//char *str = union_section->sec_64.sectname;
-				//printf("union_section name ==> 		%s\n", str);
+				char *sectname = sec_64[j].sectname;
+				printf("segname = %s && sectname ==> %s\n", segname, sectname);
 				j++;
 			}
 		}
-		*/
+		/*
 		if (lc->cmd == LC_SYMTAB)
 		{
 			sc = (struct symtab_command *)lc;
@@ -99,6 +85,7 @@ int		main(int ac, char **av)
 				j++;
 			}
 		}
+		*/
 		lc = (void *)lc + lc->cmdsize;
 		i++;
 

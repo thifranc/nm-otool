@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/25 15:59:11 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/30 16:18:42 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FT_NM_H
 
 #define ERR_MULTI_OPT 128
+#define ERR_SAME_ARG 129
 #define ERR_OPEN 1
 #define ERR_FSTAT 2
 #define ERR_MMAP 4

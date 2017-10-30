@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/24 12:44:14 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/30 15:16:47 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,11 +62,14 @@ int		parser(int ac, char **av)
 	DEBUG
 	int i;
 	char options; 
-	int both;
 
 	i = 0;
 	while (i < ac)
 	{
+		j = i + 1;
+		while (j++ < ac)
+			if (ft_strcmp(av[i], av[j]) == 0)
+				return (ERR_SAME_ARG);
 		if (av[i][0] == '-')
 		{
 			ft_putstr(ft_ptrf( "this is options : %s\n", av[i]));
@@ -76,6 +79,5 @@ int		parser(int ac, char **av)
 		}
 		i++;
 	}
-	both = options;
-	return (both);
+	return ((int)options);
 }
