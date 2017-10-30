@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/30 16:43:21 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/30 17:11:45 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 
 typedef struct s_a {
 	unsigned char	opt;
-	//unsigned char	n_sect;
+	unsigned char	n_sect;
 	unsigned char	data_sec;
 	unsigned char	text_sec;
 	unsigned char	bss_sec;

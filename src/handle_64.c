@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/30 16:29:26 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/10/30 17:12:00 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,27 @@ int		symtab_64(struct symtab_command *sc, char *ptr, char ***all_string)
 	return (0);
 }
 
+int		get_n_sect64(struct segment_command_64* sg ,t_a *g)
+{
+	struct	section_64	*sec_64;
+	char *segname;
+	char *sectname;
+	int	j;
+
+	segname = sg->segname;
+	sec_64 = (void*)sg + sizeof(struct segment_command_64);
+
+	j = 0;
+	while (j < (int)sg->nsects)
+	{
+		sectname = sec_64[j].sectname;
+		printf("segname = %s && sectname ==> %s\n", segname, sectname);
+		j++;
+	}
+	g->n_sect += j;
+	return (0);
+}
+
 int		handle_64(char *title, char *ptr, t_a g)
 {
 	DEBUG
@@ -66,6 +87,10 @@ int		handle_64(char *title, char *ptr, t_a g)
 	i = 0;
 	while (i < (int)header->ncmds)
 	{
+		if (lc->cmd == LC_SEGMENT_64)
+		{
+			get_n_sect64((struct segment_command_64 *)lc, &g);
+		}
 		if (lc->cmd == LC_SYMTAB)
 		{
 			symtab_64((struct symtab_command *)lc, ptr, &output);
