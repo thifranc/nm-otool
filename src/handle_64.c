@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/02 16:02:21 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/02 17:28:17 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,14 @@ int		symtab_64(struct symtab_command *sc, char *ptr, char ***all_string, t_a g)
 	if (!(*all_string = (char**)malloc(sizeof(char *) * sc->nsyms)))
 		return (ERR_MALLOC);
 
-	symbol_table = (void *)ptr + sc->symoff;
-	stringtable = (void *)ptr + sc->stroff;
+	if (!is_compromised(g.filesize, 0, 0, sc->symoff) &&
+			!is_compromised(g.filesize, 0, 0, sc->stroff))
+	{
+		symbol_table = (void *)ptr + sc->symoff;
+		stringtable = (void *)ptr + sc->stroff;
+	}
+	else
+		return (ERR_IS_COMPROMISED);
 
 	j = 0;
 	while (j < (int)sc->nsyms)
@@ -96,10 +102,16 @@ int		handle_64(char *ptr, t_a g)
 		}
 		if (lc->cmd == LC_SYMTAB)
 		{
-			dprintf(1, "sections are : bss %d | text %d | data %d \n", (int)g.bss_sec, (int)g.text_sec, (int)g.data_sec);
+			dprintf(1,
+			"sections are : bss %d | text %d | data %d \n",
+			(int)g.bss_sec, (int)g.text_sec, (int)g.data_sec);
 			symtab_64((struct symtab_command *)lc, ptr, &output, g);
 		}
-		lc = (void *)lc + lc->cmdsize;
+		if (!is_compromised(g.filesize,
+					(int)ptr, (int)((void*)lc + lc->cmdsize), 0))
+			lc = (void *)lc + lc->cmdsize;
+		else
+			return (ERR_IS_COMPROMISED);
 		i++;
 	}
 	return (0);
