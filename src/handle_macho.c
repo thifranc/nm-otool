@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 14:48:06 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/30 16:31:50 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/02 13:02:49 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,19 +48,6 @@ char	open_file(char *file, char **ptr)
 			== MAP_FAILED)
 		return (ERR_MMAP);
 	return (0);
-}
-
-char	*get_type(int type)
-{
-	char	*n_type;
-
-	if (type == N_UNDF || type == N_PBUD)
-		n_type = "U";
-	if (type == N_SECT)
-		n_type = "T";
-	if (type == N_ABS)
-		n_type = "A";
-	return (n_type);
 }
 
 int		handle_macho(char *file, t_a g)
