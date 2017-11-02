@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/02 14:09:15 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/02 16:01:32 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,12 +32,15 @@
 
 #define N_SECT_MASK 1024
 
+
 typedef struct s_a {
+	int				filesize;
 	unsigned char	opt;
 	unsigned char	n_sect;
 	unsigned char	data_sec;
 	unsigned char	text_sec;
 	unsigned char	bss_sec;
+	char			*title;
 } t_a;
 
 # include "../libft/libft.h"
@@ -55,9 +58,11 @@ typedef struct s_a {
 		, __FILE__, __FUNCTION__);
 
 int		handle_error(int flag);
+int		is_compromised(int size, int start, int jump, int offset);
+
 int		handle_macho(char *file, t_a g);
-int		handle_64(char *title, char *ptr, t_a g);
-int		handle_32(char *title, char *ptr, t_a g);
+int		handle_64(char *ptr, t_a g);
+int		handle_32(char *ptr, t_a g);
 
 int		parser(int ac, char **av);
 

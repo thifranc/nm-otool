@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/02 14:13:13 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/02 16:02:48 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,12 +46,4 @@ char	*get_type(int type, t_a g)
 	if (type == N_ABS)
 		n_type = "A";
 	return (n_type);
-}
-
-int		is_compromised(int size, int start, int jump, int offset)
-{
-	if (offset > size || jump - start > size)
-		return (ERR_IS_COMPROMISED);
-	else
-		return (0);
 }

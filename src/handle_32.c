@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/02 13:43:49 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/02 16:02:21 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,13 @@ void	symtab_32(struct symtab_command *sc, char *ptr, t_a g)
 	}
 }
 
-int		handle_32(char *title, char *ptr, t_a g)
+int		handle_32(char *ptr, t_a g)
 {
 	DEBUG
 		struct	mach_header		*header;
 	struct	load_command	*lc;
 	int						i;
 
-	dprintf(1, "%s, %d\n", title, g.opt);
 	header = (struct mach_header *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header);
 

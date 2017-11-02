@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/02 14:13:55 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/02 16:02:21 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		get_n_sect64(struct segment_command_64* sg ,t_a *g)
 	return (0);
 }
 
-int		handle_64(char *title, char *ptr, t_a g)
+int		handle_64(char *ptr, t_a g)
 {
 	DEBUG
 	struct	mach_header_64	*header;
@@ -83,7 +83,6 @@ int		handle_64(char *title, char *ptr, t_a g)
 	int						i;
 	char					**output;
 
-	dprintf(1, "%s, %d\n", title, g.opt);
 	header = (struct mach_header_64 *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header_64);
 
