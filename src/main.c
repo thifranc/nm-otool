@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/02 16:01:12 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:28:38 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	open_file(char *file, char **ptr, t_a *g)
 {
-	DEBUG
+	//DEBUG
 	int			fd;
 	struct stat	buf;
 
@@ -31,26 +31,36 @@ char	open_file(char *file, char **ptr, t_a *g)
 
 int		handle_file(char *file, t_a g)
 {
-	DEBUG
+	//DEBUG
 	int		error_code;
 	char	*ptr;
+	unsigned int	magic_number;
 
 	if ((error_code = open_file(file, &ptr, &g)) != 0)
 		return (handle_error(error_code));
 	else
 	{
 		g.title = file;
+		magic_number = *(int *)ptr;
 		//test magic number FAT etc
-		handle_macho(ptr, g);
+		if (magic_number == FAT_MAGIC ||
+			magic_number == FAT_MAGIC_64 ||
+				magic_number == FAT_CIGAM_64 ||
+				magic_number == FAT_CIGAM
+				)
+			return (ERR_IS_FAT);
+		else
+			handle_macho(ptr, g);
 	}
 	return (0);
 }
 
 int		main(int ac, char **av)
 {
-	DEBUG
+	//DEBUG
 	t_a		 g;
 	int		i;
+	int		error;
 
 	i = 1;
 	if (ac == 1)
@@ -63,7 +73,11 @@ int		main(int ac, char **av)
 	while (i < ac)
 	{
 		if (av[i][0] != '-')
-			handle_file(av[i], g);
+		{
+			dprintf(1, "%s\n", av[i]);
+			if ((error = handle_file(av[i], g)) != 0)
+				handle_error(error);
+		}
 		i++;
 	}
 	return (0);

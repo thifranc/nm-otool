@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 10:49:03 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:20:00 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 #define ERR_MAGIC 8
 #define ERR_MALLOC 16
 #define ERR_IS_COMPROMISED 32
+#define ERR_IS_FAT 64
 
 #define OPT_R 1
 #define OPT_P 2
@@ -52,6 +53,7 @@ typedef struct s_a {
 # include <sys/stat.h>
 # include <sys/mman.h>
 # include <mach-o/loader.h>
+# include <mach-o/fat.h>
 # include <mach-o/nlist.h>
 # include <ar.h>
 
@@ -59,7 +61,7 @@ typedef struct s_a {
 		, __FILE__, __FUNCTION__);
 
 int		handle_error(int flag);
-int		is_compromised(int size, int start, int jump, int offset);
+int		is_compromised(long size, long start, long jump, long offset);
 
 int		handle_macho(char *file, t_a g);
 int		handle_64(char *ptr, t_a g);
@@ -72,4 +74,7 @@ void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur);
 void	printBits(size_t const size, void const * const ptr);
 
 void	print_tab(char **tab, int len);
+int		swaptest(int a, char options);
+struct load_command	swap_lc(struct load_command *lc, char opt);
+
 #endif

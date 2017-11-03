@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 10:48:31 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:42:43 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,3 +59,37 @@ void	print_tab(char **tab, int len)
 		i++;
 	}
 }
+
+struct load_command	swap_lc(struct load_command *lc, char opt)
+{
+	struct load_command	lc_clean;
+
+	lc_clean.cmd = swaptest(lc->cmd, opt);
+	lc_clean.cmdsize = swaptest(lc->cmdsize, opt);
+	return (lc_clean);
+}
+
+/*
+  * move byte 3 to byte 0
+  * move byte 1 to byte 2
+  * move byte 2 to byte 1
+  * move byte 0 to byte 3
+*/
+
+int		swap_bits(int num)
+{
+	return ((num>>24)&0xff) |
+				((num<<8)&0xff0000) |
+				((num>>8)&0xff00) |
+				((num<<24)&0xff000000);
+}
+
+int		swaptest(int a, char options)
+{
+	if (options & TO_SWAP)
+		return (swap_bits(a));
+	else
+		return (a);
+}
+
+

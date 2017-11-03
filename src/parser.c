@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/10/30 16:50:48 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 15:29:03 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ char	get_options(char *arg)
 //assumes little endian
 void	printBits(size_t const size, void const * const ptr)
 {
-	DEBUG
+	//DEBUG
     unsigned char *b = (unsigned char*) ptr;
     unsigned char byte;
     int i, j;

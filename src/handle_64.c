@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 11:08:01 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 14:45:01 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ int		handle_64(char *ptr, t_a g)
 	DEBUG
 	struct	mach_header_64	*header;
 	struct	load_command	*lc;
+	struct	load_command	lc_clean;
 	int						i;
 	char					**output;
 
@@ -97,13 +98,14 @@ int		handle_64(char *ptr, t_a g)
 
 	i = 0;
 	g.n_sect = 0;
-	while (i < (int)header->ncmds)
+	while (i < swaptest((int)header->ncmds, g.opt))
 	{
-		if (lc->cmd == LC_SEGMENT_64)
+		lc_clean = swap_lc(lc, g.opt);
+		if (lc_clean.cmd == LC_SEGMENT_64)
 		{
 			get_n_sect64((struct segment_command_64 *)lc, &g);
 		}
-		if (lc->cmd == LC_SYMTAB)
+		if (lc_clean.cmd == LC_SYMTAB)
 		{
 			dprintf(1,
 			"sections are : bss %d | text %d | data %d \n",
@@ -111,8 +113,8 @@ int		handle_64(char *ptr, t_a g)
 			symtab_64((struct symtab_command *)lc, ptr, &output, &g);
 		}
 		if (!is_compromised(g.filesize,
-					(int)ptr, (int)((void*)lc + lc->cmdsize), 0))
-			lc = (void *)lc + lc->cmdsize;
+					(long)ptr, (long)((void*)lc + lc_clean.cmdsize), 0))
+			lc = (void *)lc + lc_clean.cmdsize;
 		else
 			return (ERR_IS_COMPROMISED);
 		i++;
