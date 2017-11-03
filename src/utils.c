@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 09:46:54 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 10:48:31 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,4 +46,16 @@ char	*get_type(int type, t_a g)
 	if (type == N_ABS)
 		n_type = "A";
 	return (n_type);
+}
+
+void	print_tab(char **tab, int len)
+{
+	int		i;
+
+	i = 0;
+	while (i < len)
+	{
+		ft_putstr(tab[i]);
+		i++;
+	}
 }

@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 09:14:56 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 10:49:03 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,5 @@ char	*get_type(int type, t_a g);
 void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur);
 void	printBits(size_t const size, void const * const ptr);
 
+void	print_tab(char **tab, int len);
 #endif
