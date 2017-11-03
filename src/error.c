@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:05:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/02 17:28:17 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 10:05:45 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int		handle_error(int flag)
 
 int		is_compromised(int size, int start, int jump, int offset)
 {
-	DEBUG
 	if (offset > size || jump - start > size)
 		return (ERR_IS_COMPROMISED);
 	else

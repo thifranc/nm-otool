@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/02 16:01:32 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 09:14:56 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@
 
 typedef struct s_a {
 	int				filesize;
+	int				nsyms;
 	unsigned char	opt;
 	unsigned char	n_sect;
 	unsigned char	data_sec;

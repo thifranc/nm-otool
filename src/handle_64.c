@@ -6,18 +6,39 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/02 17:28:17 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 10:16:42 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/nm.h"
+
+char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
+{
+	int		type;
+	char	*prefill;
+	char	*s;
+
+	if (!((s) = (char*)malloc(sizeof(char) * (19 + ft_strlen(strx_start)))))
+		return (NULL);
+	type = symb_tab.n_sect == NO_SECT ?
+		symb_tab.n_type & N_TYPE:
+		symb_tab.n_sect | N_SECT_MASK;
+
+	prefill = symb_tab.n_value ?
+		ft_ptrf("%0*x", symb_tab.n_value, 16) :
+		"                ",
+
+	s = ft_ptrf("%s %s %s\n", prefill,
+		get_type(type, g), strx_start);
+	return (s);
+}
 
 int		symtab_64(struct symtab_command *sc, char *ptr, char ***all_string, t_a g)
 {
 	DEBUG
 	struct	nlist_64	*symbol_table;
 	char				*stringtable;
-	int					type;
+	//int					type;
 	int					j;
 
 	if (!(*all_string = (char**)malloc(sizeof(char *) * sc->nsyms)))
@@ -36,6 +57,10 @@ int		symtab_64(struct symtab_command *sc, char *ptr, char ***all_string, t_a g)
 	while (j < (int)sc->nsyms)
 	{
 		
+		(*all_string)[j] = fill_str_64(symbol_table[j],
+				stringtable + symbol_table[j].n_un.n_strx, g);
+		//pass &all_string[j] + return if error or no to function
+		/*
 		if (!((*all_string)[j] = (char*)malloc(sizeof(char)
 			* (19 + ft_strlen(stringtable + symbol_table[j].n_un.n_strx)))))
 			return (ERR_MALLOC);
@@ -48,6 +73,7 @@ int		symtab_64(struct symtab_command *sc, char *ptr, char ***all_string, t_a g)
 				ft_ptrf("%0*x", symbol_table[j].n_value, 16) :
 				"                ",
 			get_type(type, g), stringtable + symbol_table[j].n_un.n_strx);
+			*/
 		j++;
 	}
 	j = 0;
