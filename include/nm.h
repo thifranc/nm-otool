@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 15:20:00 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 17:48:21 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ typedef struct s_a {
 int		handle_error(int flag);
 int		is_compromised(long size, long start, long jump, long offset);
 
+int		handle_fat(char *ptr, t_a g);
 int		handle_macho(char *file, t_a g);
 int		handle_64(char *ptr, t_a g);
 int		handle_32(char *ptr, t_a g);
@@ -75,6 +76,7 @@ void	printBits(size_t const size, void const * const ptr);
 
 void	print_tab(char **tab, int len);
 int		swaptest(int a, char options);
+int		swap_bits(int num);
 struct load_command	swap_lc(struct load_command *lc, char opt);
 
 #endif
