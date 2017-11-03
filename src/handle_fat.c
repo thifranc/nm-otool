@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 17:06:17 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 18:11:18 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/03 18:19:06 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,14 @@ int		fat_arch(char *ptr, t_a g, int archs)
 	struct fat_arch	*arch;
 	int				i;
 
-	i = archs;
-	arch = (struct fat_arch *)((void*)ptr + sizeof(struct fat_header));
+	i = 0;
+	arch = (struct fat_arch *) ( (void*)ptr + sizeof(struct fat_header) ) ;
 	dprintf(1, "%d && %d && %d\n", g.filesize, swap_bits(arch->offset), arch->offset);
-	handle_macho((void *)ptr + swap_bits(arch->offset), g);
-	/*
 	while (i < archs)
 	{
-		handle_macho((void *)ptr + arch->offset, g);
+		handle_macho((void *)ptr + swap_bits(arch->offset), g);
 		i++;
 	}
-	*/
 	return (0);
 }
 
@@ -62,7 +59,7 @@ int		handle_fat(char *ptr, t_a g)
 	else
 	{
 		dprintf(1, "32 type\n");
-		fat_arch(ptr, g, fat->nfat_arch);
+		fat_arch(ptr, g, swap_bits(fat->nfat_arch));
 	}
 	return (0);
 }
