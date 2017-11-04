@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/04 10:58:04 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/04 14:53:14 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ int		symtab_32(struct symtab_command sc, char *ptr, char ***all_string, t_a *g)
 int		get_n_sect32(struct segment_command* sg ,t_a *g)
 {
 	DEBUG
-	struct	section	*sec_32;
-	char			*segname;
-	char			*sectname;
-	int				j;
+	struct	section		*sec_32;
+	char				*segname;
+	char				*sectname;
+	long long unsigned	j;
 
 
 	segname = sg->segname;
@@ -94,7 +94,7 @@ int		handle_32(char *ptr, t_a g)
 	struct	mach_header		*header;
 	struct	load_command	*lc;
 	struct	load_command	lc_clean;
-	int						i;
+	long long unsigned		i;
 	char					**output;
 
 	header = (struct mach_header *)ptr;

@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 17:06:17 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 18:19:06 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/04 14:51:20 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ int		fat_arch(char *ptr, t_a g, int archs)
 
 	i = 0;
 	arch = (struct fat_arch *) ( (void*)ptr + sizeof(struct fat_header) ) ;
-	dprintf(1, "%d && %d && %d\n", g.filesize, swap_bits(arch->offset), arch->offset);
+	dprintf(1, "%d && %lld && %d\n", g.filesize, swap_bits(arch->offset), arch->offset);
 	while (i < archs)
 	{
 		handle_macho((void *)ptr + swap_bits(arch->offset), g);
@@ -34,11 +34,19 @@ int		fat_arch(char *ptr, t_a g, int archs)
 	return (0);
 }
 
-int		fat_arch64(char *ptr, t_a g)
+int		fat_arch_64(char *ptr, t_a g, int archs)
 {
-	ptr = NULL;
-	g.nsyms = 3;
-	//struct fat_arch_64	*arch;
+	struct fat_arch_64	*arch;
+	int					i;
+
+	i = 0;
+	arch = (struct fat_arch_64 *) ( (void*)ptr + sizeof(struct fat_header) ) ;
+	dprintf(1, "%d && %lld && %llu\n", g.filesize, swap_bits(arch->offset), arch->offset);
+	while (i < archs)
+	{
+		handle_macho((void *)ptr + swap_bits(arch->offset), g);
+		i++;
+	}
 	return (0);
 }
 
@@ -54,7 +62,7 @@ int		handle_fat(char *ptr, t_a g)
 		fat->magic == FAT_CIGAM_64)
 	{
 		dprintf(1, "64 type\n");
-		fat_arch64((void*)ptr + sizeof(struct fat_header), g);
+		fat_arch_64(ptr, g, swap_bits(fat->nfat_arch));
 	}
 	else
 	{

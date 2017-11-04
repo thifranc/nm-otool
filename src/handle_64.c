@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/04 11:32:32 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/04 15:36:55 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 {
-	DEBUG
 	int		type;
 	char	*prefill;
 	char	*s;
@@ -93,7 +92,7 @@ int		handle_64(char *ptr, t_a g)
 	struct	mach_header_64	*header;
 	struct	load_command	*lc;
 	struct	load_command	lc_clean;
-	int						i;
+	long long unsigned		i;
 	char					**output;
 
 	header = (struct mach_header_64 *)ptr;

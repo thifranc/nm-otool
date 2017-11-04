@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 17:30:26 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/04 15:04:58 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ int		handle_file(char *file, t_a g)
 	{
 		g.title = file;
 		magic_number = *(int *)ptr;
+		dprintf(1, "forst magic nb -- %x\n", magic_number);
 		if (magic_number == FAT_MAGIC ||
 			magic_number == FAT_MAGIC_64 ||
 			magic_number == FAT_CIGAM ||

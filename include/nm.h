@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/04 10:43:37 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/04 14:51:44 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur);
 void	printBits(size_t const size, void const * const ptr);
 
 void	print_tab(char **tab, int len);
-int		swaptest(int a, char options);
-int		swap_bits(int num);
+long long unsigned		swaptest(long long int a, char options);
+long long unsigned		swap_bits(long long int num);
 
 struct load_command	swap_lc(struct load_command *lc, char opt);
 

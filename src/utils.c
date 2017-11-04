@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/04 10:48:34 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/04 15:25:56 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ struct nlist_64	swap_st_64(struct nlist_64 st, char opt)
   * move byte 0 to byte 3
 */
 
-int		swap_bits(int num)
+long long unsigned		swap_bits(long long int num)
 {
 	return ((num>>24)&0xff) |
 				((num<<8)&0xff0000) |
@@ -119,7 +119,7 @@ int		swap_bits(int num)
 				((num<<24)&0xff000000);
 }
 
-int		swaptest(int a, char options)
+long long unsigned		swaptest(long long int a, char options)
 {
 	if (options & TO_SWAP)
 		return (swap_bits(a));
