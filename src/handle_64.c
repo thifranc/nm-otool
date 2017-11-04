@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 14:45:01 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/04 11:32:32 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 {
+	DEBUG
 	int		type;
 	char	*prefill;
 	char	*s;
@@ -33,29 +34,31 @@ char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 	return (s);
 }
 
-int		symtab_64(struct symtab_command *sc, char *ptr, char ***all_string, t_a *g)
+int		symtab_64(struct symtab_command sc, char *ptr, char ***all_string, t_a *g)
 {
 	DEBUG
-	struct	nlist_64	*symbol_table;
+	struct	nlist_64	*st;
+	struct	nlist_64	st_clean;
 	char				*stringtable;
 	int					j;
 
 	j = 0;
-	g->nsyms = (int)sc->nsyms;
-	if (!(*all_string = (char**)malloc(sizeof(char *) * sc->nsyms)))
+	g->nsyms = (int)sc.nsyms;
+	if (!(*all_string = (char**)malloc(sizeof(char *) * sc.nsyms)))
 		return (ERR_MALLOC);
-	if (!is_compromised(g->filesize, 0, 0, sc->symoff) &&
-			!is_compromised(g->filesize, 0, 0, sc->stroff))
+	if (!is_compromised(g->filesize, 0, 0, sc.symoff) &&
+			!is_compromised(g->filesize, 0, 0, sc.stroff))
 	{
-		symbol_table = (void *)ptr + sc->symoff;
-		stringtable = (void *)ptr + sc->stroff;
+		st = (void *)ptr + sc.symoff;
+		stringtable = (void *)ptr + sc.stroff;
 	}
 	else
 		return (ERR_IS_COMPROMISED);
 	while (j < g->nsyms)
 	{
-		if (!((*all_string)[j] = fill_str_64(symbol_table[j],
-				stringtable + symbol_table[j].n_un.n_strx, *g)))
+		st_clean = swap_st_64(st[j], g->opt);
+		if (!((*all_string)[j] = fill_str_64(st_clean,
+				stringtable + st_clean.n_un.n_strx, *g)))
 			return (ERR_MALLOC);
 		j++;
 	}
@@ -110,7 +113,7 @@ int		handle_64(char *ptr, t_a g)
 			dprintf(1,
 			"sections are : bss %d | text %d | data %d \n",
 			(int)g.bss_sec, (int)g.text_sec, (int)g.data_sec);
-			symtab_64((struct symtab_command *)lc, ptr, &output, &g);
+			symtab_64(swap_sc((struct symtab_command *)lc, g.opt), ptr, &output, &g);
 		}
 		if (!is_compromised(g.filesize,
 					(long)ptr, (long)((void*)lc + lc_clean.cmdsize), 0))

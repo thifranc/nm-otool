@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/04 10:21:46 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/04 10:48:34 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,18 @@ struct symtab_command	swap_sc(struct symtab_command *sc, char opt)
 struct nlist	swap_st(struct nlist st, char opt)
 {
 	struct nlist	st_clean;
+
+	st_clean = st;
+	st_clean.n_sect = swaptest(st.n_sect, opt);
+	st_clean.n_type = swaptest(st.n_type, opt);
+	st_clean.n_value = swaptest(st.n_value, opt);
+	st_clean.n_un.n_strx = swaptest(st.n_un.n_strx, opt);
+	return (st_clean);
+}
+
+struct nlist_64	swap_st_64(struct nlist_64 st, char opt)
+{
+	struct nlist_64	st_clean;
 
 	st_clean = st;
 	st_clean.n_sect = swaptest(st.n_sect, opt);
