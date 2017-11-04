@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 14:48:06 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 18:18:17 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/04 09:28:42 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,9 @@ int		handle_macho(char *ptr, t_a g)
 		handle_error(error_code);
 
 	printBits(sizeof(g.opt), &(g.opt));
-	/*
 	if (g.opt & IS_32)
 		handle_32(ptr, g);
 	else
 		handle_64(ptr, g);
-		*/
 	return (0);
 }

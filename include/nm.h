@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 17:48:21 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/04 09:59:12 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	printBits(size_t const size, void const * const ptr);
 void	print_tab(char **tab, int len);
 int		swaptest(int a, char options);
 int		swap_bits(int num);
-struct load_command	swap_lc(struct load_command *lc, char opt);
 
+struct nlist	swap_st(struct nlist st, char opt);
+struct load_command	swap_lc(struct load_command *lc, char opt);
+struct symtab_command	swap_sc(struct symtab_command *sc, char opt);
 #endif
