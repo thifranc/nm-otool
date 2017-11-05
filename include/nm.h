@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/04 14:51:44 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/05 16:32:41 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ typedef struct s_a {
 
 # define DEBUG dprintf(1, "- %s - %s\n" \
 		, __FILE__, __FUNCTION__);
+
+void	quickSort(char ***arr, int low, int high, t_a g);
 
 int		handle_error(int flag);
 int		is_compromised(long size, long start, long jump, long offset);

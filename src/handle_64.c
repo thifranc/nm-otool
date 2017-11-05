@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/04 15:36:55 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/05 16:34:32 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ int		handle_64(char *ptr, t_a g)
 			return (ERR_IS_COMPROMISED);
 		i++;
 	}
+	quickSort(&output, 0, g.nsyms - 1, g);
 	print_tab(output, g.nsyms);
 	return (0);
 }
