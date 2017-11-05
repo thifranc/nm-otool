@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/04 15:04:58 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/05 19:37:28 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	open_file(char *file, char **ptr, t_a *g)
 {
-	DEBUG
+	//DEBUG
 	int			fd;
 	struct stat	buf;
 
@@ -31,7 +31,7 @@ char	open_file(char *file, char **ptr, t_a *g)
 
 int		handle_file(char *file, t_a g)
 {
-	DEBUG
+	//DEBUG
 	int		error_code;
 	char	*ptr;
 	unsigned int	magic_number;
@@ -42,7 +42,6 @@ int		handle_file(char *file, t_a g)
 	{
 		g.title = file;
 		magic_number = *(int *)ptr;
-		dprintf(1, "forst magic nb -- %x\n", magic_number);
 		if (magic_number == FAT_MAGIC ||
 			magic_number == FAT_MAGIC_64 ||
 			magic_number == FAT_CIGAM ||
@@ -54,12 +53,13 @@ int		handle_file(char *file, t_a g)
 		else
 			handle_macho(ptr, g);
 	}
+	munmap(ptr, g.filesize);
 	return (0);
 }
 
 int		main(int ac, char **av)
 {
-	DEBUG
+	//DEBUG
 	t_a		 g;
 	int		i;
 	int		error;

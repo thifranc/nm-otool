@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 14:48:06 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/04 09:28:42 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/05 19:37:28 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,10 @@
 
 char	macho_config(char *ptr, unsigned char *options)
 {
-	DEBUG
+	//DEBUG
 	unsigned int	magic_number;
 
 	magic_number = *(int *)ptr;
-	dprintf(1, "magic_number ==== %x\n", magic_number);
 	if (magic_number != MH_CIGAM_64 &&
 			magic_number != MH_CIGAM &&
 			magic_number != MH_MAGIC &&
@@ -39,13 +38,13 @@ char	macho_config(char *ptr, unsigned char *options)
 
 int		handle_macho(char *ptr, t_a g)
 {
-	DEBUG
+	//DEBUG
 	int		error_code;
 
 	if ((error_code = macho_config(ptr, &(g.opt))) != 0)
 		handle_error(error_code);
 
-	printBits(sizeof(g.opt), &(g.opt));
+	//printBits(sizeof(g.opt), &(g.opt));
 	if (g.opt & IS_32)
 		handle_32(ptr, g);
 	else

@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/05 16:34:32 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/05 19:43:12 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 {
+	//DEBUG
 	int		type;
 	char	*prefill;
 	char	*s;

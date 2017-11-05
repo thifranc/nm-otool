@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/04 15:25:56 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/05 19:43:12 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,10 @@ void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur)
 
 char	*get_type(int type, t_a g)
 {
+	//DEBUG
 	char	*n_type;
 
+	n_type = "";
 	if (type & N_SECT_MASK)
 	{
 		type = type ^ N_SECT_MASK;
