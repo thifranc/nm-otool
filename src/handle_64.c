@@ -6,11 +6,46 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 16:01:32 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 16:40:44 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/nm.h"
+
+char	*get_type_64(char **s, struct nlist_64 smb_tab, t_a g)
+{
+	//DEBUG
+	int		type;
+
+	*(*s + 17) = ' ';
+	type = smb_tab.n_type & N_TYPE;
+	if (type == N_SECT)
+	{
+		type = smb_tab.n_sect;
+		if (type == g.bss_sec)
+			*(*s + 17) = 'B';
+		else if (type == g.data_sec)
+			*(*s + 17) = 'D';
+		else if (type == g.text_sec)
+			*(*s + 17) = 'T';
+		else
+			*(*s + 17) = 'S';
+	}
+	else
+	{
+		if (type == N_UNDF || type == N_PBUD)
+			*(*s + 17) = 'U';
+		if (type == N_ABS)
+			*(*s + 17) = 'A';
+		if (type == N_INDR)
+			*(*s + 17) = 'I';
+	}
+	if (!(smb_tab.n_type & N_EXT))
+	{
+		*(*s + 17) = ft_tolower(*(*s + 17));
+	}
+	return (NULL);
+}
 
 char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 {
@@ -30,11 +65,14 @@ char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 		"                ",
 
 	s = ft_ptrf("%s   %s\n", prefill, strx_start);
-	get_type(&s, symb_tab, g);
-	if (!(symb_tab.n_type & N_STAB))
+	get_type_64(&s, symb_tab, g);
+	/*
+		dprintf(1, "%llx g.text_sec = %d && nsyms = %d && ntype = %d && n_type_epuré = %d && nsect = %d && char found is [%c] && %s\n",
+			symb_tab.n_value, g.text_sec, g.nsyms, symb_tab.n_type, symb_tab.n_type & N_TYPE ,symb_tab.n_sect, s[17], strx_start);
+			*/
+	if ((symb_tab.n_type & N_STAB))
 	{
-		dprintf(1, "g.text_sec = %d && nsyms = %d && ntype = %d && n_type_epuré = %d && nsect = %d && char found is [%c] && %s\n",
-			g.text_sec, g.nsyms, symb_tab.n_type, symb_tab.n_type & N_TYPE ,symb_tab.n_sect, s[17], strx_start);
+		s = "";
 	}
 	return (s);
 }
@@ -131,6 +169,6 @@ int		handle_64(char *ptr, t_a g)
 		i++;
 	}
 	quickSort(&output, 0, g.nsyms - 1, g);
-	//print_tab(output, g.nsyms);
+	print_tab(output, g.nsyms);
 	return (0);
 }

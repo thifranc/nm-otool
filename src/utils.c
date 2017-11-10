@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 15:54:39 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 16:43:47 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ char	*get_type(char **s, struct nlist_64 smb_tab, t_a g)
 	int		type;
 
 	*(*s + 17) = ' ';
+	if (smb_tab.n_type & N_STAB)
+		return (NULL);
 	type = smb_tab.n_type & N_TYPE;
-	//dprintf(1, "pure type = %d\n", smb_tab.n_type & N_TYPE);
 	if (type == N_SECT)
 	{
 		type = smb_tab.n_sect;
@@ -47,12 +48,15 @@ char	*get_type(char **s, struct nlist_64 smb_tab, t_a g)
 		else
 			*(*s + 17) = 'S';
 	}
-	if (type == N_UNDF || type == N_PBUD)
-		*(*s + 17) = 'U';
-	if (type == N_ABS)
-		*(*s + 17) = 'A';
-	if (type == N_INDR)
-		*(*s + 17) = 'I';
+	else
+	{
+		if (type == N_UNDF || type == N_PBUD)
+			*(*s + 17) = 'U';
+		if (type == N_ABS)
+			*(*s + 17) = 'A';
+		if (type == N_INDR)
+			*(*s + 17) = 'I';
+	}
 	if (!(smb_tab.n_type & N_EXT))
 	{
 		*(*s + 17) = ft_tolower(*(*s + 17));
