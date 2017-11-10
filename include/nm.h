@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/05 16:32:41 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 10:04:06 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int		handle_32(char *ptr, t_a g);
 
 int		parser(int ac, char **av);
 
-char	*get_type(int type, t_a g);
+char	*get_type(char **s, struct nlist_64 type, t_a g);
 void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur);
 void	printBits(size_t const size, void const * const ptr);
 

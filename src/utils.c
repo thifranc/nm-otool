@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/05 19:43:12 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 10:29:05 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,27 +27,32 @@ void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur)
 	}
 }
 
-char	*get_type(int type, t_a g)
+char	*get_type(char **s, struct nlist_64 smb_tab, t_a g)
 {
 	//DEBUG
-	char	*n_type;
+	int		type;
 
-	n_type = "";
-	if (type & N_SECT_MASK)
+	*(*s + 17) = ' ';
+	type = smb_tab.n_type & N_TYPE;
+	if (smb_tab.n_sect != NO_SECT)
 	{
-		type = type ^ N_SECT_MASK;
+		type = smb_tab.n_sect;
 		if (type == g.bss_sec)
-			n_type =  "B";
+			*(*s + 17) =  'B';
 		else if (type == g.data_sec)
-			n_type =  "D";
+			*(*s + 17) =  'D';
 		else if (type == g.text_sec)
-			n_type =  "T";
+			*(*s + 17) =  'T';
 	}
 	if (type == N_UNDF || type == N_PBUD)
-		n_type = "U";
+		*(*s + 17) = 'U';
 	if (type == N_ABS)
-		n_type = "A";
-	return (n_type);
+		*(*s + 17) = 'A';
+	if (!(smb_tab.n_type & N_EXT))
+	{
+		*(*s + 17) = ft_tolower(*(*s + 17));
+	}
+	return (NULL);
 }
 
 void	print_tab(char **tab, int len)
@@ -107,18 +112,18 @@ struct nlist_64	swap_st_64(struct nlist_64 st, char opt)
 	return (st_clean);
 }
 /*
-  * move byte 3 to byte 0
-  * move byte 1 to byte 2
-  * move byte 2 to byte 1
-  * move byte 0 to byte 3
-*/
+ * move byte 3 to byte 0
+ * move byte 1 to byte 2
+ * move byte 2 to byte 1
+ * move byte 0 to byte 3
+ */
 
 long long unsigned		swap_bits(long long int num)
 {
 	return ((num>>24)&0xff) |
-				((num<<8)&0xff0000) |
-				((num>>8)&0xff00) |
-				((num<<24)&0xff000000);
+		((num<<8)&0xff0000) |
+		((num>>8)&0xff00) |
+		((num<<24)&0xff000000);
 }
 
 long long unsigned		swaptest(long long int a, char options)

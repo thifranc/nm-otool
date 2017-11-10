@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 15:29:03 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 08:18:16 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 char	get_options(char *arg)
 {
-	DEBUG
+	//DEBUG
 	int 	i;
 	char	opt;
 
@@ -59,7 +59,7 @@ void	printBits(size_t const size, void const * const ptr)
 
 int		parser(int ac, char **av)
 {
-	DEBUG
+	//DEBUG
 	int i;
 	int j;
 	char options; 

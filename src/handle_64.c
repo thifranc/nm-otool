@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/05 19:43:12 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 10:29:05 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 		ft_ptrf("%0*x", symb_tab.n_value, 16) :
 		"                ",
 
-	s = ft_ptrf("%s %s %s\n", prefill,
-		get_type(type, g), strx_start);
+	s = ft_ptrf("%s   %s\n", prefill, strx_start);
+	get_type(&s, symb_tab, g);
 	return (s);
 }
 
 int		symtab_64(struct symtab_command sc, char *ptr, char ***all_string, t_a *g)
 {
-	DEBUG
+	//DEBUG
 	struct	nlist_64	*st;
 	struct	nlist_64	st_clean;
 	char				*stringtable;
@@ -89,7 +89,7 @@ int		get_n_sect64(struct segment_command_64* sg ,t_a *g)
 
 int		handle_64(char *ptr, t_a g)
 {
-	DEBUG
+	//DEBUG
 	struct	mach_header_64	*header;
 	struct	load_command	*lc;
 	struct	load_command	lc_clean;
@@ -98,6 +98,7 @@ int		handle_64(char *ptr, t_a g)
 
 	header = (struct mach_header_64 *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header_64);
+	output = NULL;
 
 	i = 0;
 	g.n_sect = 0;
@@ -110,9 +111,11 @@ int		handle_64(char *ptr, t_a g)
 		}
 		if (lc_clean.cmd == LC_SYMTAB)
 		{
+			/*
 			dprintf(1,
 			"sections are : bss %d | text %d | data %d \n",
 			(int)g.bss_sec, (int)g.text_sec, (int)g.data_sec);
+			*/
 			symtab_64(swap_sc((struct symtab_command *)lc, g.opt), ptr, &output, &g);
 		}
 		if (!is_compromised(g.filesize,

@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/05 19:36:45 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 09:37:38 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ char	*fill_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 	char	*prefill;
 	char	*s;
 
+	if (g.opt)
+		s = NULL;
 	if (!((s) = (char*)malloc(sizeof(char) * (19 + ft_strlen(strx_start)))))
 		return (NULL);
 	type = symb_tab.n_sect == NO_SECT ?
@@ -30,7 +32,7 @@ char	*fill_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 		"                ",
 
 	s = ft_ptrf("%s %s %s\n", prefill,
-		get_type(type, g), strx_start);
+		/*get_type(type, g)*/"BUG", strx_start);
 	return (s);
 }
 
@@ -99,6 +101,7 @@ int		handle_32(char *ptr, t_a g)
 
 	header = (struct mach_header *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header);
+	output = NULL;
 
 	i = 0;
 	g.n_sect = 0;
@@ -111,9 +114,11 @@ int		handle_32(char *ptr, t_a g)
 		}
 		if (lc_clean.cmd == LC_SYMTAB)
 		{
+			/*
 			dprintf(1,
 			"sections are : bss %d | text %d | data %d \n",
 			(int)g.bss_sec, (int)g.text_sec, (int)g.data_sec);
+			*/
 			symtab_32(swap_sc((struct symtab_command *)lc, g.opt), ptr, &output, &g);
 		}
 		if (!is_compromised(g.filesize,
