@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 16:43:47 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 16:52:24 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,45 +23,11 @@ void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur)
 			g->text_sec = g->n_sect + cur + 1;
 		}
 		else if (!ft_strcmp(sectname, "__bss") && !ft_strcmp(segname, "__BSS"))
+		{
+			dprintf(1, "oijoijoijoijo\n");
 			g->bss_sec = g->n_sect + cur + 1;
+		}
 	}
-}
-
-char	*get_type(char **s, struct nlist_64 smb_tab, t_a g)
-{
-	//DEBUG
-	int		type;
-
-	*(*s + 17) = ' ';
-	if (smb_tab.n_type & N_STAB)
-		return (NULL);
-	type = smb_tab.n_type & N_TYPE;
-	if (type == N_SECT)
-	{
-		type = smb_tab.n_sect;
-		if (type == g.bss_sec)
-			*(*s + 17) = 'B';
-		else if (type == g.data_sec)
-			*(*s + 17) = 'D';
-		else if (type == g.text_sec)
-			*(*s + 17) = 'T';
-		else
-			*(*s + 17) = 'S';
-	}
-	else
-	{
-		if (type == N_UNDF || type == N_PBUD)
-			*(*s + 17) = 'U';
-		if (type == N_ABS)
-			*(*s + 17) = 'A';
-		if (type == N_INDR)
-			*(*s + 17) = 'I';
-	}
-	if (!(smb_tab.n_type & N_EXT))
-	{
-		*(*s + 17) = ft_tolower(*(*s + 17));
-	}
-	return (NULL);
 }
 
 void	print_tab(char **tab, int len)

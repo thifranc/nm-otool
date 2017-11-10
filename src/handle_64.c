@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 16:40:44 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 16:51:09 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,12 @@ char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 
 	prefill = symb_tab.n_value ?
 		ft_ptrf("%0*x", symb_tab.n_value, 16) :
-		"                ",
+		"                ";
 
+	if (symb_tab.n_value == 4295097456)
+	{
+		dprintf(1, "type = %d && bss = %d\n", symb_tab.n_sect, g.bss_sec);
+	}
 	s = ft_ptrf("%s   %s\n", prefill, strx_start);
 	get_type_64(&s, symb_tab, g);
 	/*
