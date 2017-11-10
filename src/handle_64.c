@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 10:29:05 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 16:01:32 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,11 @@ char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 
 	s = ft_ptrf("%s   %s\n", prefill, strx_start);
 	get_type(&s, symb_tab, g);
+	if (!(symb_tab.n_type & N_STAB))
+	{
+		dprintf(1, "g.text_sec = %d && nsyms = %d && ntype = %d && n_type_epuré = %d && nsect = %d && char found is [%c] && %s\n",
+			g.text_sec, g.nsyms, symb_tab.n_type, symb_tab.n_type & N_TYPE ,symb_tab.n_sect, s[17], strx_start);
+	}
 	return (s);
 }
 
@@ -126,6 +131,6 @@ int		handle_64(char *ptr, t_a g)
 		i++;
 	}
 	quickSort(&output, 0, g.nsyms - 1, g);
-	print_tab(output, g.nsyms);
+	//print_tab(output, g.nsyms);
 	return (0);
 }

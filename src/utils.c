@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 10:29:05 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 15:54:39 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@ void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur)
 {
 	if (ft_strcmpi(segname, sectname) == 0)
 	{
-		if (!ft_strcmp(sectname, "__data"))
+		if (!ft_strcmp(sectname, "__data") && !ft_strcmp(segname, "__DATA"))
 			g->data_sec = g->n_sect + cur + 1;
-		else if (!ft_strcmp(sectname, "__text"))
+		else if (!ft_strcmp(sectname, "__text") && !ft_strcmp(segname, "__TEXT"))
 		{
 			g->text_sec = g->n_sect + cur + 1;
 		}
-		else if (!ft_strcmp(sectname, "__bss"))
+		else if (!ft_strcmp(sectname, "__bss") && !ft_strcmp(segname, "__BSS"))
 			g->bss_sec = g->n_sect + cur + 1;
 	}
 }
@@ -34,20 +34,25 @@ char	*get_type(char **s, struct nlist_64 smb_tab, t_a g)
 
 	*(*s + 17) = ' ';
 	type = smb_tab.n_type & N_TYPE;
-	if (smb_tab.n_sect != NO_SECT)
+	//dprintf(1, "pure type = %d\n", smb_tab.n_type & N_TYPE);
+	if (type == N_SECT)
 	{
 		type = smb_tab.n_sect;
 		if (type == g.bss_sec)
-			*(*s + 17) =  'B';
+			*(*s + 17) = 'B';
 		else if (type == g.data_sec)
-			*(*s + 17) =  'D';
+			*(*s + 17) = 'D';
 		else if (type == g.text_sec)
-			*(*s + 17) =  'T';
+			*(*s + 17) = 'T';
+		else
+			*(*s + 17) = 'S';
 	}
 	if (type == N_UNDF || type == N_PBUD)
 		*(*s + 17) = 'U';
 	if (type == N_ABS)
 		*(*s + 17) = 'A';
+	if (type == N_INDR)
+		*(*s + 17) = 'I';
 	if (!(smb_tab.n_type & N_EXT))
 	{
 		*(*s + 17) = ft_tolower(*(*s + 17));
