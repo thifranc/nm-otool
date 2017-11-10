@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 16:23:45 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 18:50:29 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,15 @@ char	*get_type_32(char **s, struct nlist smb_tab, t_a g)
 		else
 			*(*s + 17) = 'S';
 	}
+	else
+	{
 	if (type == N_UNDF || type == N_PBUD)
 		*(*s + 17) = 'U';
 	if (type == N_ABS)
 		*(*s + 17) = 'A';
 	if (type == N_INDR)
 		*(*s + 17) = 'I';
+	}
 	if (!(smb_tab.n_type & N_EXT))
 	{
 		*(*s + 17) = ft_tolower(*(*s + 17));
@@ -51,8 +54,6 @@ char	*fill_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 	char	*prefill;
 	char	*s;
 
-	if (g.opt)
-		s = NULL;
 	if (!((s) = (char*)malloc(sizeof(char) * (19 + ft_strlen(strx_start)))))
 		return (NULL);
 	type = symb_tab.n_sect == NO_SECT ?
@@ -60,8 +61,8 @@ char	*fill_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 		symb_tab.n_sect | N_SECT_MASK;
 
 	prefill = symb_tab.n_value ?
-		ft_ptrf("%0*x", symb_tab.n_value, 16) :
-		"                ",
+		ft_ptrf("%0*x", symb_tab.n_value, 8) :
+		"        ",
 
 	s = ft_ptrf("%s %s %s\n", prefill,
 	get_type_32(&s, symb_tab, g), strx_start);
@@ -101,7 +102,6 @@ int		symtab_32(struct symtab_command sc, char *ptr, char ***all_string, t_a *g)
 
 int		get_n_sect32(struct segment_command* sg ,t_a *g)
 {
-	//DEBUG
 	struct	section		*sec_32;
 	char				*segname;
 	char				*sectname;
@@ -160,6 +160,7 @@ int		handle_32(char *ptr, t_a g)
 			return (ERR_IS_COMPROMISED);
 		i++;
 	}
+	quickSort(&output, 0, g.nsyms - 1, g);
 	print_tab(output, g.nsyms);
 	return (0);
 }

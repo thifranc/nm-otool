@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 16:52:24 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 18:38:51 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,18 +16,13 @@ void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur)
 {
 	if (ft_strcmpi(segname, sectname) == 0)
 	{
-		if (!ft_strcmp(sectname, "__data") && !ft_strcmp(segname, "__DATA"))
+		if (!ft_strcmp(sectname, "__data"))
 			g->data_sec = g->n_sect + cur + 1;
-		else if (!ft_strcmp(sectname, "__text") && !ft_strcmp(segname, "__TEXT"))
-		{
+		else if (!ft_strcmp(sectname, "__text"))
 			g->text_sec = g->n_sect + cur + 1;
-		}
-		else if (!ft_strcmp(sectname, "__bss") && !ft_strcmp(segname, "__BSS"))
-		{
-			dprintf(1, "oijoijoijoijo\n");
-			g->bss_sec = g->n_sect + cur + 1;
-		}
 	}
+	else if (!ft_strcmp(segname, "__DATA") && !ft_strcmp(sectname, "__bss"))
+		g->bss_sec = g->n_sect + cur + 1;
 }
 
 void	print_tab(char **tab, int len)

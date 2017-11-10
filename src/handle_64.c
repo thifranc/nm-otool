@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 16:51:09 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/10 18:51:15 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,20 +64,8 @@ char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 		ft_ptrf("%0*x", symb_tab.n_value, 16) :
 		"                ";
 
-	if (symb_tab.n_value == 4295097456)
-	{
-		dprintf(1, "type = %d && bss = %d\n", symb_tab.n_sect, g.bss_sec);
-	}
 	s = ft_ptrf("%s   %s\n", prefill, strx_start);
 	get_type_64(&s, symb_tab, g);
-	/*
-		dprintf(1, "%llx g.text_sec = %d && nsyms = %d && ntype = %d && n_type_epuré = %d && nsect = %d && char found is [%c] && %s\n",
-			symb_tab.n_value, g.text_sec, g.nsyms, symb_tab.n_type, symb_tab.n_type & N_TYPE ,symb_tab.n_sect, s[17], strx_start);
-			*/
-	if ((symb_tab.n_type & N_STAB))
-	{
-		s = "";
-	}
 	return (s);
 }
 
@@ -117,14 +105,14 @@ int		get_n_sect64(struct segment_command_64* sg ,t_a *g)
 	struct	section_64	*sec_64;
 	char	*segname;
 	char	*sectname;
-	int		j;
+	long long unsigned		j;
 
 
 	segname = sg->segname;
 	sec_64 = (void*)sg + sizeof(struct segment_command_64);
 
 	j = 0;
-	while (j < (int)sg->nsects)
+	while (j < swaptest((int)sg->nsects, g->opt))
 	{
 		sectname = sec_64[j].sectname;
 		utils_match_nsect(segname, sectname, g, j);
