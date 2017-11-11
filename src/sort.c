@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/05 15:41:41 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/05 16:34:42 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/11 09:53:04 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int partition (char **arr, int low, int high, t_a g)
     int i = (low - 1);  // Index of smaller element
 	int	jump;
  
-	jump = g.opt & IS_32 ? 12 : 19;
+	jump = g.opt & IS_32 ? 11 : 19;
     for (int j = low; j <= high- 1; j++)
     {
         // If current element is smaller than or

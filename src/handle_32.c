@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 18:50:29 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/11 09:49:58 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,32 +17,32 @@ char	*get_type_32(char **s, struct nlist smb_tab, t_a g)
 	//DEBUG
 	int		type;
 
-	*(*s + 17) = ' ';
+	*(*s + 9) = ' ';
 	type = smb_tab.n_type & N_TYPE;
 	if (type == N_SECT)
 	{
 		type = smb_tab.n_sect;
 		if (type == g.bss_sec)
-			*(*s + 17) = 'B';
+			*(*s + 9) = 'B';
 		else if (type == g.data_sec)
-			*(*s + 17) = 'D';
+			*(*s + 9) = 'D';
 		else if (type == g.text_sec)
-			*(*s + 17) = 'T';
+			*(*s + 9) = 'T';
 		else
-			*(*s + 17) = 'S';
+			*(*s + 9) = 'S';
 	}
 	else
 	{
 	if (type == N_UNDF || type == N_PBUD)
-		*(*s + 17) = 'U';
+		*(*s + 9) = 'U';
 	if (type == N_ABS)
-		*(*s + 17) = 'A';
+		*(*s + 9) = 'A';
 	if (type == N_INDR)
-		*(*s + 17) = 'I';
+		*(*s + 9) = 'I';
 	}
 	if (!(smb_tab.n_type & N_EXT))
 	{
-		*(*s + 17) = ft_tolower(*(*s + 17));
+		*(*s + 9) = ft_tolower(*(*s + 9));
 	}
 	return (NULL);
 }
@@ -54,7 +54,7 @@ char	*fill_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 	char	*prefill;
 	char	*s;
 
-	if (!((s) = (char*)malloc(sizeof(char) * (19 + ft_strlen(strx_start)))))
+	if (!((s) = (char*)malloc(sizeof(char) * (11 + ft_strlen(strx_start)))))
 		return (NULL);
 	type = symb_tab.n_sect == NO_SECT ?
 		symb_tab.n_type & N_TYPE:
@@ -64,8 +64,8 @@ char	*fill_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 		ft_ptrf("%0*x", symb_tab.n_value, 8) :
 		"        ",
 
-	s = ft_ptrf("%s %s %s\n", prefill,
-	get_type_32(&s, symb_tab, g), strx_start);
+	s = ft_ptrf("%s   %s\n", prefill, strx_start);
+	get_type_32(&s, symb_tab, g);
 	return (s);
 }
 
