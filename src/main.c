@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 16:28:28 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/11 10:37:44 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,6 @@ int		main(int ac, char **av)
 	{
 		if (av[i][0] != '-')
 		{
-			//dprintf(1, "%s\n", av[i]);
 			if ((error = handle_file(av[i], g)) != 0)
 				handle_error(error);
 		}

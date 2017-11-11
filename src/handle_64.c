@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 18:51:15 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/11 10:37:44 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,10 @@ char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 	char	*prefill;
 	char	*s;
 
+	if (symb_tab.n_type & N_STAB)
+	{
+		return ("");
+	}
 	if (!((s) = (char*)malloc(sizeof(char) * (19 + ft_strlen(strx_start)))))
 		return (NULL);
 	type = symb_tab.n_sect == NO_SECT ?

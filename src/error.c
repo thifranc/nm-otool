@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:05:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/03 15:29:19 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/11 10:34:47 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int		handle_error(int flag)
 {
 	//DEBUG
-	dprintf(1, "err is %d\n", flag);
+	dprintf(2, "err is %d\n", flag);
 	return (1);
 }
 
