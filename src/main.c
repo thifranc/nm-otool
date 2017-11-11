@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/11 10:37:44 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/11 10:57:20 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,12 @@ int		handle_file(char *file, t_a g)
 			magic_number == FAT_CIGAM_64
 				)
 		{
+			dprintf(1, "is fat file\n");
 			handle_fat(ptr, g);
 		}
 		else
 		{
+			dprintf(1, "is classic macho file\n");
 			handle_macho(ptr, g);
 		}
 	}

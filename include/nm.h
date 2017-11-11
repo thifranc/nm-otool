@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/11 10:50:41 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/11 11:32:53 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct s_a {
 # include <fcntl.h>
 # include <sys/stat.h>
 # include <sys/mman.h>
+# include <mach/machine.h>
 # include <mach-o/loader.h>
 # include <mach-o/fat.h>
 # include <mach-o/nlist.h>
