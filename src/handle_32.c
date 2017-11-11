@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/11 09:49:58 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/11 10:13:01 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ char	*get_type_32(char **s, struct nlist smb_tab, t_a g)
 	}
 	else
 	{
-	if (type == N_UNDF || type == N_PBUD)
-		*(*s + 9) = 'U';
-	if (type == N_ABS)
-		*(*s + 9) = 'A';
-	if (type == N_INDR)
-		*(*s + 9) = 'I';
+		if (type == N_UNDF || type == N_PBUD)
+			*(*s + 9) = 'U';
+		if (type == N_ABS)
+			*(*s + 9) = 'A';
+		if (type == N_INDR)
+			*(*s + 9) = 'I';
 	}
 	if (!(smb_tab.n_type & N_EXT))
 	{
@@ -64,7 +64,7 @@ char	*fill_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 		ft_ptrf("%0*x", symb_tab.n_value, 8) :
 		"        ",
 
-	s = ft_ptrf("%s   %s\n", prefill, strx_start);
+		s = ft_ptrf("%s   %s\n", prefill, strx_start);
 	get_type_32(&s, symb_tab, g);
 	return (s);
 }
@@ -93,7 +93,7 @@ int		symtab_32(struct symtab_command sc, char *ptr, char ***all_string, t_a *g)
 	{
 		st_clean = swap_st(st[j], g->opt);
 		if (!((*all_string)[j] = fill_str_32(st_clean,
-				stringtable + st_clean.n_un.n_strx, *g)))
+						stringtable + st_clean.n_un.n_strx, *g)))
 			return (ERR_MALLOC);
 		j++;
 	}
@@ -147,10 +147,10 @@ int		handle_32(char *ptr, t_a g)
 		if (lc_clean.cmd == LC_SYMTAB)
 		{
 			/*
-			dprintf(1,
-			"sections are : bss %d | text %d | data %d \n",
-			(int)g.bss_sec, (int)g.text_sec, (int)g.data_sec);
-			*/
+			   dprintf(1,
+			   "sections are : bss %d | text %d | data %d \n",
+			   (int)g.bss_sec, (int)g.text_sec, (int)g.data_sec);
+			   */
 			symtab_32(swap_sc((struct symtab_command *)lc, g.opt), ptr, &output, &g);
 		}
 		if (!is_compromised(g.filesize,
