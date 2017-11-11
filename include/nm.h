@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/10 16:44:17 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/11 10:50:41 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ int		parser(int ac, char **av);
 void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur);
 void	printBits(size_t const size, void const * const ptr);
 
-void	print_tab(char **tab, int len);
+void	print_tab(char **tab, int len, char *title);
 long long unsigned		swaptest(long long int a, char options);
 long long unsigned		swap_bits(long long int num);
 

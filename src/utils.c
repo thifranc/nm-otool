@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/11 10:14:21 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/11 10:50:41 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,13 @@ void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur)
 		g->bss_sec = g->n_sect + cur + 1;
 }
 
-void	print_tab(char **tab, int len)
+void	print_tab(char **tab, int len, char *file)
 {
 	int		i;
 
 	i = 0;
+	ft_putstr(file);
+	ft_putchar('\n');
 	while (i < len)
 	{
 		ft_putstr(tab[i]);
