@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 17:06:17 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/11 14:18:31 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/16 11:13:55 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,13 @@
 	<mach/machine.h> is needed here for the cpu_type_t and cpu_subtype_t types
 */
 
-char	*arch_name(char arch, int options)
+char	*arch_name(int arch, int options)
 {
 	char	*name;
 
+	dprintf(1, "recevied ");
+	printBits(sizeof(arch), &arch);
+	dprintf(1, "\n");
 	name = "failed";
 	options = 1;
 	if (arch == CPU_TYPE_MC680x0 )
@@ -84,7 +87,7 @@ int		fat_arch(char *ptr, t_a g, int archs)
 	i = 0;
 	dprintf(1, "is 32\n");
 	arch = (struct fat_arch *) ( (void*)ptr + sizeof(struct fat_header) ) ;
-	arch_name((char)swap_bits(arch->cputype), g.opt);
+	arch_name(swap_bits(arch->cputype & CPU_ARCH_MASK), g.opt);
 	while (i < archs)
 	{
 		handle_macho((void *)ptr + swap_bits(arch->offset), g);
@@ -101,7 +104,7 @@ int		fat_arch_64(char *ptr, t_a g, int archs)
 	i = 0;
 	dprintf(1, "is 64\n");
 	arch = (struct fat_arch_64 *) ( (void*)ptr + sizeof(struct fat_header) ) ;
-	arch_name(swap_bits(arch->cputype), g.opt);
+	arch_name(swap_bits(arch->cputype & CPU_ARCH_MASK), g.opt);
 	while (i < archs)
 	{
 		handle_macho((void *)ptr + swap_bits(arch->offset), g);
