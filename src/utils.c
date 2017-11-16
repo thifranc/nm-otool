@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/11 10:50:41 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/16 15:53:50 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	print_tab(char **tab, int len, char *file)
 		ft_putstr(tab[i]);
 		i++;
 	}
+	ft_putchar('\n');
 }
 
 struct load_command	swap_lc(struct load_command *lc, char opt)
