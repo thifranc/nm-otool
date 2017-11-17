@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 16:32:12 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 16:58:04 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ void	print_tab(char **tab, struct s_a g)
 
 	i = 0;
 	title = "";
-	if (g.opt & MANY_ARGS)
-		title = ft_ptrf("\n%s\n", g.title);
+	if (g.opt & MANY_ARGS && !(g.opt & IS_FAT))
+		title = ft_ptrf("\n%s:\n", g.title);
 	if (g.opt & MANY_ARCHS)
-		title = ft_ptrf("\n%s (for architecture %s)\n", g.title, g.cputype);
+		title = ft_ptrf("\n%s (for architecture %s):\n", g.title, g.cputype);
 	ft_putstr(title);
 	while (i < g.nsyms)
 	{
@@ -92,8 +92,6 @@ struct nlist	swap_st(struct nlist st, char opt)
 	struct nlist	st_clean;
 
 	st_clean = st;
-	//st_clean.n_sect = swaptest(st.n_sect, opt);
-	//st_clean.n_type = swaptest(st.n_type, opt);
 	st_clean.n_value = swaptest(st.n_value, opt);
 	st_clean.n_un.n_strx = swaptest(st.n_un.n_strx, opt);
 	return (st_clean);
@@ -104,18 +102,10 @@ struct nlist_64	swap_st_64(struct nlist_64 st, char opt)
 	struct nlist_64	st_clean;
 
 	st_clean = st;
-	//st_clean.n_sect = swaptest(st.n_sect, opt);
-	//st_clean.n_type = swaptest(st.n_type, opt);
 	st_clean.n_value = swaptest(st.n_value, opt);
 	st_clean.n_un.n_strx = swaptest(st.n_un.n_strx, opt);
 	return (st_clean);
 }
-/*
- * move byte 3 to byte 0
- * move byte 1 to byte 2
- * move byte 2 to byte 1
- * move byte 0 to byte 3
- */
 
 long long unsigned		swap_bits(long long int num)
 {

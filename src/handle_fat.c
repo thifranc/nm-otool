@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 17:06:17 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 16:30:51 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 16:51:33 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,11 @@ int		fat_arch(char *ptr, t_a g, int archs)
 {
 	struct fat_arch	*arch;
 	int				i;
-	int					matched;
+	int				used;
+	int				matched;
 
 	i = 0;
+	used = 0;
 	//dprintf(1, "is 32 with %d archs\n", archs);
 	arch = (struct fat_arch *) ( (void*)ptr + sizeof(struct fat_header) ) ;
 	matched = match_cpu(archs, arch);
@@ -42,7 +44,7 @@ int		fat_arch(char *ptr, t_a g, int archs)
 	{
 		g.cputype = get_cpu_string(swap_bits(arch->cputype));
 		if (!matched ||
-				(matched && swap_bits(arch->cputype) == CPU_TYPE_X86_64))
+				(matched && swap_bits(arch->cputype) == CPU_TYPE_X86_64 && !used++))
 			handle_macho((void *)ptr + swap_bits(arch->offset), g);
 		arch = (struct fat_arch *) ((void*)arch + sizeof(struct fat_arch));
 		i++;
@@ -69,9 +71,11 @@ int		fat_arch_64(char *ptr, t_a g, int archs)
 {
 	struct fat_arch_64	*arch;
 	int					i;
+	int					used;
 	int					matched;
 
 	i = 0;
+	used = 0;
 	//dprintf(1, "is 64 with %d archs\n", archs);
 	arch = (struct fat_arch_64 *) ( (void*)ptr + sizeof(struct fat_header) ) ;
 	matched = match_cpu_64(archs, arch);
@@ -80,7 +84,7 @@ int		fat_arch_64(char *ptr, t_a g, int archs)
 	{
 		g.cputype = get_cpu_string(swap_bits(arch->cputype));
 		if (!matched ||
-				(matched && swap_bits(arch->cputype) == CPU_TYPE_X86_64))
+				(matched && swap_bits(arch->cputype) == CPU_TYPE_X86_64 && !used++))
 			handle_macho((void *)ptr + swap_bits(arch->offset), g);
 		handle_macho((void *)ptr + swap_bits(arch->offset), g);
 		arch = (struct fat_arch_64 *) ((void*)arch + sizeof(struct fat_arch_64) );
