@@ -6,15 +6,16 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/11 11:32:53 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 15:40:28 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_NM_H
 # define FT_NM_H
 
-#define ERR_MULTI_OPT 128
-#define ERR_SAME_ARG 129
+#define ERR_MULTI_OPT 256
+#define ERR_SAME_ARG 257
+
 #define ERR_OPEN 1
 #define ERR_FSTAT 2
 #define ERR_MMAP 4
@@ -30,6 +31,10 @@
 #define OPT_J 16
 #define TO_SWAP 32
 #define IS_32 64
+#define MANY_ARGS 128
+
+#define IS_FAT 256
+#define MANY_ARCHS 512
 
 #define N_SECT_MASK 1024
 
@@ -37,7 +42,7 @@
 typedef struct s_a {
 	int				filesize;
 	int				nsyms;
-	unsigned char	opt;
+	unsigned int	opt;
 	unsigned char	n_sect;
 	unsigned char	data_sec;
 	unsigned char	text_sec;
@@ -76,7 +81,7 @@ int		parser(int ac, char **av);
 void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur);
 void	printBits(size_t const size, void const * const ptr);
 
-void	print_tab(char **tab, int len, char *title);
+void	print_tab(char **tab, struct s_a g);
 long long unsigned		swaptest(long long int a, char options);
 long long unsigned		swap_bits(long long int num);
 

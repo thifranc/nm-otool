@@ -6,13 +6,13 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 14:48:06 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/05 19:37:28 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 15:29:57 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/nm.h"
 
-char	macho_config(char *ptr, unsigned char *options)
+char	macho_config(char *ptr, unsigned int *options)
 {
 	//DEBUG
 	unsigned int	magic_number;

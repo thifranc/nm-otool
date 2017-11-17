@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/16 15:53:50 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 15:35:23 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,19 +25,22 @@ void	utils_match_nsect(char *segname, char *sectname, t_a *g, int cur)
 		g->bss_sec = g->n_sect + cur + 1;
 }
 
-void	print_tab(char **tab, int len, char *file)
+void	print_tab(char **tab, struct s_a g)
 {
 	int		i;
 
 	i = 0;
-	ft_putstr(file);
-	ft_putchar('\n');
-	while (i < len)
+	if (g.opt & MANY_ARGS || g.opt & MANY_ARCHS)
+	{
+		ft_putchar('\n');
+		ft_putstr(g.title);
+		ft_putchar('\n');
+	}
+	while (i < g.nsyms)
 	{
 		ft_putstr(tab[i]);
 		i++;
 	}
-	ft_putchar('\n');
 }
 
 struct load_command	swap_lc(struct load_command *lc, char opt)

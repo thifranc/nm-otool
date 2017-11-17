@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 17:06:17 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/16 16:03:04 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 15:32:03 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int		fat_arch(char *ptr, t_a g, int archs)
 	//dprintf(1, "is 32 with %d archs\n", archs);
 	arch = (struct fat_arch *) ( (void*)ptr + sizeof(struct fat_header) ) ;
 	matched = match_cpu(archs, arch);
+	g.opt = matched ? g.opt & ~MANY_ARCHS : g.opt | MANY_ARCHS;
 	while (i < archs)
 	{
 		if (!matched ||
@@ -73,6 +74,7 @@ int		fat_arch_64(char *ptr, t_a g, int archs)
 	//dprintf(1, "is 64 with %d archs\n", archs);
 	arch = (struct fat_arch_64 *) ( (void*)ptr + sizeof(struct fat_header) ) ;
 	matched = match_cpu_64(archs, arch);
+	g.opt = matched ? g.opt & ~MANY_ARCHS : g.opt | MANY_ARCHS;
 	while (i < archs)
 	{
 		if (!matched ||
