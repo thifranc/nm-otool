@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 15:40:28 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 16:24:01 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ typedef struct s_a {
 	unsigned char	text_sec;
 	unsigned char	bss_sec;
 	char			*title;
+	char			*cputype;
 } t_a;
 
 # include "../libft/libft.h"
@@ -92,4 +93,7 @@ struct symtab_command	swap_sc(struct symtab_command *sc, char opt);
 
 struct nlist_64	swap_st_64(struct nlist_64 st, char opt);
 struct symtab_command_64	swap_sc_64(struct symtab_command_64 *sc, char opt);
+
+char	*get_cpu_string(int cputype);
+
 #endif

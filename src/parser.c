@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 15:41:02 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 15:43:20 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int		parser(int ac, char **av)
 	//DEBUG
 	int i;
 	int j;
-	int options; 
+	int options;
 
 	i = 1;
 	options = 0;

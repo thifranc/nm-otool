@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 17:06:17 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 15:32:03 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 16:30:51 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ int		fat_arch(char *ptr, t_a g, int archs)
 	g.opt = matched ? g.opt & ~MANY_ARCHS : g.opt | MANY_ARCHS;
 	while (i < archs)
 	{
+		g.cputype = get_cpu_string(swap_bits(arch->cputype));
 		if (!matched ||
 				(matched && swap_bits(arch->cputype) == CPU_TYPE_X86_64))
 			handle_macho((void *)ptr + swap_bits(arch->offset), g);
@@ -77,6 +78,7 @@ int		fat_arch_64(char *ptr, t_a g, int archs)
 	g.opt = matched ? g.opt & ~MANY_ARCHS : g.opt | MANY_ARCHS;
 	while (i < archs)
 	{
+		g.cputype = get_cpu_string(swap_bits(arch->cputype));
 		if (!matched ||
 				(matched && swap_bits(arch->cputype) == CPU_TYPE_X86_64))
 			handle_macho((void *)ptr + swap_bits(arch->offset), g);
