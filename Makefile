@@ -6,7 +6,7 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/11/05 16:18:11 by thifranc         ###   ########.fr        #
+#    Updated: 2017/11/17 18:46:20 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ OTOOL = ft_otool
 
 #includes and srcs
 INC_NM = nm
-SRCS_NM = sort main parser handle_macho handle_fat handle_64 handle_32 error utils
+SRCS_NM = swap sort main parser handle_macho handle_fat handle_64 handle_32 error utils
 
 INC_OTOOL = otool
 SRCS_OTOOL = 

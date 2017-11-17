@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 15:31:13 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 18:26:58 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 char	*get_type_64(char **s, struct nlist_64 smb_tab, t_a g)
 {
-	//DEBUG
-	int		type;
+	int	type;
 
 	*(*s + 17) = ' ';
 	type = smb_tab.n_type & N_TYPE;
@@ -41,15 +40,12 @@ char	*get_type_64(char **s, struct nlist_64 smb_tab, t_a g)
 			*(*s + 17) = 'I';
 	}
 	if (!(smb_tab.n_type & N_EXT))
-	{
 		*(*s + 17) = ft_tolower(*(*s + 17));
-	}
 	return (NULL);
 }
 
 char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 {
-	//DEBUG
 	int		type;
 	char	*prefill;
 	char	*s;
@@ -61,25 +57,23 @@ char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 	if (!((s) = (char*)malloc(sizeof(char) * (19 + ft_strlen(strx_start)))))
 		return (NULL);
 	type = symb_tab.n_sect == NO_SECT ?
-		symb_tab.n_type & N_TYPE:
+		symb_tab.n_type & N_TYPE :
 		symb_tab.n_sect | N_SECT_MASK;
-
 	prefill = symb_tab.n_value ?
 		ft_ptrf("%0*x", symb_tab.n_value, 16) :
 		"                ";
-
 	s = ft_ptrf("%s   %s\n", prefill, strx_start);
 	get_type_64(&s, symb_tab, g);
 	return (s);
 }
 
-int		symtab_64(struct symtab_command sc, char *ptr, char ***all_string, t_a *g)
+int		symtab_64(struct symtab_command sc, char *ptr,
+		char ***all_string, t_a *g)
 {
-	//DEBUG
-	struct	nlist_64	*st;
-	struct	nlist_64	st_clean;
-	char				*stringtable;
-	int					j;
+	struct nlist_64	*st;
+	struct nlist_64	st_clean;
+	char			*stringtable;
+	int				j;
 
 	j = 0;
 	g->nsyms = (int)sc.nsyms;
@@ -104,17 +98,15 @@ int		symtab_64(struct symtab_command sc, char *ptr, char ***all_string, t_a *g)
 	return (0);
 }
 
-int		get_n_sect64(struct segment_command_64* sg ,t_a *g)
+int		get_n_sect64(struct segment_command_64 *sg, t_a *g)
 {
-	struct	section_64	*sec_64;
-	char	*segname;
-	char	*sectname;
-	long long unsigned		j;
-
+	struct section_64	*sec_64;
+	char				*segname;
+	char				*sectname;
+	long long unsigned	j;
 
 	segname = sg->segname;
 	sec_64 = (void*)sg + sizeof(struct segment_command_64);
-
 	j = 0;
 	while (j < swaptest((int)sg->nsects, g->opt))
 	{
@@ -128,35 +120,25 @@ int		get_n_sect64(struct segment_command_64* sg ,t_a *g)
 
 int		handle_64(char *ptr, t_a g)
 {
-	//DEBUG
-	struct	mach_header_64	*header;
-	struct	load_command	*lc;
-	struct	load_command	lc_clean;
+	struct mach_header_64	*header;
+	struct load_command		*lc;
+	struct load_command		lc_clean;
 	long long unsigned		i;
 	char					**output;
 
 	header = (struct mach_header_64 *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header_64);
 	output = NULL;
-
 	i = 0;
 	g.n_sect = 0;
 	while (i < swaptest((int)header->ncmds, g.opt))
 	{
 		lc_clean = swap_lc(lc, g.opt);
 		if (lc_clean.cmd == LC_SEGMENT_64)
-		{
 			get_n_sect64((struct segment_command_64 *)lc, &g);
-		}
 		if (lc_clean.cmd == LC_SYMTAB)
-		{
-			/*
-			dprintf(1,
-			"sections are : bss %d | text %d | data %d \n",
-			(int)g.bss_sec, (int)g.text_sec, (int)g.data_sec);
-			*/
-			symtab_64(swap_sc((struct symtab_command *)lc, g.opt), ptr, &output, &g);
-		}
+			symtab_64(swap_sc((struct symtab_command *)lc, g.opt), ptr,
+					&output, &g);
 		if (!is_compromised(g.filesize,
 					(long)ptr, (long)((void*)lc + lc_clean.cmdsize), 0))
 			lc = (void *)lc + lc_clean.cmdsize;

@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 15:43:20 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 18:42:15 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 char	get_options(char *arg)
 {
-	//DEBUG
-	int 	i;
+	int		i;
 	char	opt;
 
 	i = 0;
@@ -23,28 +22,27 @@ char	get_options(char *arg)
 	while (arg[i])
 	{
 		if (arg[i] == 'r')
-			opt = opt & OPT_R ? (char)ERR_MULTI_OPT :  opt | OPT_R;
+			opt = opt & OPT_R ? (char)ERR_MULTI_OPT : opt | OPT_R;
 		else if (arg[i] == 'j')
-			opt = opt & OPT_J ? (char)ERR_MULTI_OPT :  opt | OPT_J;
+			opt = opt & OPT_J ? (char)ERR_MULTI_OPT : opt | OPT_J;
 		else if (arg[i] == 'u')
-			opt = opt & OPT_U ? (char)ERR_MULTI_OPT :  opt | OPT_U;
+			opt = opt & OPT_U ? (char)ERR_MULTI_OPT : opt | OPT_U;
 		else if (arg[i] == 'p')
-			opt = opt & OPT_P ? (char)ERR_MULTI_OPT :  opt | OPT_P;
+			opt = opt & OPT_P ? (char)ERR_MULTI_OPT : opt | OPT_P;
 		else if (arg[i] == 'n')
-			opt = opt & OPT_N ? (char)ERR_MULTI_OPT :  opt | OPT_N;
+			opt = opt & OPT_N ? (char)ERR_MULTI_OPT : opt | OPT_N;
 		i++;
 	}
 	return (opt);
 }
 
-//assumes little endian
 void	printBits(size_t const size, void const * const ptr)
 {
-	//DEBUG
-    unsigned char *b = (unsigned char*) ptr;
+    unsigned char *b;
     unsigned char byte;
     int i, j;
 
+	b = (unsigned char *)ptr;
     for (i=size-1;i>=0;i--)
     {
         for (j=7;j>=0;j--)
@@ -59,7 +57,6 @@ void	printBits(size_t const size, void const * const ptr)
 
 int		parser(int ac, char **av)
 {
-	//DEBUG
 	int i;
 	int j;
 	int options;
@@ -74,7 +71,7 @@ int		parser(int ac, char **av)
 				return (ERR_SAME_ARG);
 		if (av[i][0] == '-')
 		{
-			ft_putstr(ft_ptrf( "this is options : %s\n", av[i]));
+			ft_putstr(ft_ptrf("this is options : %s\n", av[i]));
 			options = get_options(av[i] + 1);
 			if (options == ERR_MULTI_OPT)
 				return (ERR_MULTI_OPT);

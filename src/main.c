@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 15:33:03 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 18:37:26 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 char	open_file(char *file, char **ptr, t_a *g)
 {
-	//DEBUG
 	int			fd;
 	struct stat	buf;
 
@@ -31,9 +30,8 @@ char	open_file(char *file, char **ptr, t_a *g)
 
 int		handle_file(char *file, t_a g)
 {
-	//DEBUG
-	int		error_code;
-	char	*ptr;
+	int				error_code;
+	char			*ptr;
 	unsigned int	magic_number;
 
 	if ((error_code = open_file(file, &ptr, &g)) != 0)
@@ -45,16 +43,13 @@ int		handle_file(char *file, t_a g)
 		if (magic_number == FAT_MAGIC ||
 			magic_number == FAT_MAGIC_64 ||
 			magic_number == FAT_CIGAM ||
-			magic_number == FAT_CIGAM_64
-				)
+			magic_number == FAT_CIGAM_64)
 		{
-			//dprintf(1, "is fat file\n");
 			g.opt = g.opt | IS_FAT;
 			handle_fat(ptr, g);
 		}
 		else
 		{
-			//dprintf(1, "is classic macho file\n");
 			g.opt = g.opt & ~IS_FAT;
 			handle_macho(ptr, g);
 		}
@@ -65,8 +60,7 @@ int		handle_file(char *file, t_a g)
 
 int		main(int ac, char **av)
 {
-	//DEBUG
-	t_a		 g;
+	t_a		g;
 	int		i;
 	int		error;
 
