@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 17:06:17 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 16:51:33 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 17:59:31 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int		fat_arch(char *ptr, t_a g, int archs)
 	//dprintf(1, "is 32 with %d archs\n", archs);
 	arch = (struct fat_arch *) ( (void*)ptr + sizeof(struct fat_header) ) ;
 	matched = match_cpu(archs, arch);
-	g.opt = matched ? g.opt & ~MANY_ARCHS : g.opt | MANY_ARCHS;
+	g.opt = matched ? g.opt & ~NO_X86_64 : g.opt | NO_X86_64;
 	while (i < archs)
 	{
 		g.cputype = get_cpu_string(swap_bits(arch->cputype));
@@ -79,7 +79,7 @@ int		fat_arch_64(char *ptr, t_a g, int archs)
 	//dprintf(1, "is 64 with %d archs\n", archs);
 	arch = (struct fat_arch_64 *) ( (void*)ptr + sizeof(struct fat_header) ) ;
 	matched = match_cpu_64(archs, arch);
-	g.opt = matched ? g.opt & ~MANY_ARCHS : g.opt | MANY_ARCHS;
+	g.opt = matched ? g.opt & ~NO_X86_64 : g.opt | NO_X86_64;
 	while (i < archs)
 	{
 		g.cputype = get_cpu_string(swap_bits(arch->cputype));
@@ -100,6 +100,7 @@ int		handle_fat(char *ptr, t_a g)
 
 	i = 0;
 	fat = (struct fat_header *)ptr;
+	g.opt = swap_bits(fat->nfat_arch) > 1 ? g.opt | MANY_ARCHS : g.opt & ~MANY_ARCHS;
 	if (fat->magic == FAT_MAGIC_64 ||
 		fat->magic == FAT_CIGAM_64)
 	{

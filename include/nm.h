@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 16:24:01 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 17:41:22 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 #define MANY_ARGS 128
 
 #define IS_FAT 256
-#define MANY_ARCHS 512
+#define NO_X86_64 512
+#define MANY_ARCHS 1024
 
 #define N_SECT_MASK 1024
 

@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 16:58:04 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 17:59:34 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,10 @@ void	print_tab(char **tab, struct s_a g)
 	title = "";
 	if (g.opt & MANY_ARGS && !(g.opt & IS_FAT))
 		title = ft_ptrf("\n%s:\n", g.title);
-	if (g.opt & MANY_ARCHS)
+	if (g.opt & NO_X86_64)
 		title = ft_ptrf("\n%s (for architecture %s):\n", g.title, g.cputype);
+	if (g.opt & IS_FAT && g.opt & NO_X86_64 && !(g.opt & MANY_ARCHS))
+		title = ft_ptrf("%s:\n", g.title);
 	ft_putstr(title);
 	while (i < g.nsyms)
 	{

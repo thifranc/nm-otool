@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/05 15:41:41 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/11 09:53:04 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/17 18:15:27 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,11 +39,17 @@ int partition (char **arr, int low, int high, t_a g)
         // If current element is smaller than or
         // equal to pivot
 		// element of comparison  PUT HOME FUNCTION HERE
-        if (ft_strcmp(arr[j] + jump, pivot + jump) <= 0)
+        if (ft_strcmp(arr[j] + jump, pivot + jump) < 0)
         {
             i++;    // increment index of smaller element
             swap(&arr[i], &arr[j]);
         }
+		else if (ft_strcmp(arr[j] + jump, pivot + jump) == 0
+				&& ft_strcmp(arr[j], pivot) <= 0)
+		{
+            i++;    // increment index of smaller element
+            swap(&arr[i], &arr[j]);
+		}
     }
     swap(&arr[i + 1], &arr[high]);
     return (i + 1);
