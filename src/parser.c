@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 18:42:15 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 14:20:27 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,22 +36,27 @@ char	get_options(char *arg)
 	return (opt);
 }
 
-void	printBits(size_t const size, void const * const ptr)
+void	print_bits(int size, void *ptr)
 {
-    unsigned char *b;
-    unsigned char byte;
-    int i, j;
+	unsigned char	*b;
+	unsigned char	byte;
+	int				i;
+	int				j;
 
 	b = (unsigned char *)ptr;
-    for (i=size-1;i>=0;i--)
-    {
-        for (j=7;j>=0;j--)
-        {
-            byte = (b[i] >> j) & 1;
+	i = 0;
+	j = 7;
+	while (i < size)
+	{
+		while (j >= 0)
+		{
+			byte = (b[i] >> j) & 1;
 			byte ? write(1, "1", 1) : write(1, "0", 1);
-        }
+			j--;
+		}
 		write(1, " ", 1);
-    }
+		i++;
+	}
 	write(1, "\n", 1);
 }
 
