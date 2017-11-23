@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 11:08:15 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 15:43:16 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,5 +98,6 @@ struct nlist_64	swap_st_64(struct nlist_64 st, char opt);
 struct symtab_command_64	swap_sc_64(struct symtab_command_64 *sc, char opt);
 
 char	*get_cpu_string(int cputype);
+void	init_g_struct(t_a *g);
 
 #endif

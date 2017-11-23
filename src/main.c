@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 14:46:06 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 15:43:39 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,6 @@ int		handle_file(char *file, t_a *g)
 
 void	init_g_struct(t_a *g)
 {
-	g->opt = g->opt & ~NO_X86_64;
-	g->opt = g->opt & ~MANY_ARCHS;
 	g->data_sec = 0;
 	g->bss_sec = 0;
 	g->text_sec = 0;

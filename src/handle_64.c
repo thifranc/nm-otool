@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 14:45:39 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 15:43:39 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int		handle_64(char *ptr, t_a *g)
 	header = (struct mach_header_64 *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header_64);
 	i = 0;
-	g->n_sect = 0;
+	init_g_struct(g);
 	while (i < swaptest((int)header->ncmds, g->opt))
 	{
 		lc_clean = swap_lc(lc, g->opt);
