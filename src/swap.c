@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 18:45:35 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 18:47:10 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 15:50:10 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,4 +51,19 @@ struct nlist_64			swap_st_64(struct nlist_64 st, char opt)
 	st_clean.n_value = swaptest(st.n_value, opt);
 	st_clean.n_un.n_strx = swaptest(st.n_un.n_strx, opt);
 	return (st_clean);
+}
+
+long long unsigned		swap_bits(long long int num)
+{
+	return (((num >> 24) & 0xff) | ((num << 8) & 0xff0000) |
+			((num >> 8) & 0xff00) |
+			((num << 24) & 0xff000000));
+}
+
+long long unsigned		swaptest(long long int a, char options)
+{
+	if (options & TO_SWAP)
+		return (swap_bits(a));
+	else
+		return (a);
 }

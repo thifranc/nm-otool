@@ -6,13 +6,13 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 15:11:18 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 16:20:42 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/nm.h"
 
-char					*get_cpu_string(int cputype)
+char	*get_cpu_string(int cputype)
 {
 	char	*ret;
 
@@ -34,7 +34,7 @@ char					*get_cpu_string(int cputype)
 	return (ret);
 }
 
-void					print_tab(char **tab, struct s_a g)
+void	print_tab(char **tab, struct s_a g)
 {
 	int		i;
 	char	*title;
@@ -57,7 +57,7 @@ void					print_tab(char **tab, struct s_a g)
 	}
 }
 
-void					utils_match_nsect(char *segname,
+void	utils_match_nsect(char *segname,
 		char *sectname, t_a *g, int cur)
 {
 	if (ft_strcmpi(segname, sectname) == 0)
@@ -71,17 +71,36 @@ void					utils_match_nsect(char *segname,
 		g->bss_sec = g->n_sect + cur + 1;
 }
 
-long long unsigned		swap_bits(long long int num)
+void	init_g_struct(t_a *g)
 {
-	return (((num >> 24) & 0xff) | ((num << 8) & 0xff0000) |
-			((num >> 8) & 0xff00) |
-			((num << 24) & 0xff000000));
+	g->data_sec = 0;
+	g->bss_sec = 0;
+	g->text_sec = 0;
+	g->n_sect = 0;
 }
 
-long long unsigned		swaptest(long long int a, char options)
+char	get_type(int type, t_a g, int fallback)
 {
-	if (options & TO_SWAP)
-		return (swap_bits(a));
+	if (type == N_SECT)
+	{
+		type = fallback;
+		if (type == g.bss_sec)
+			return ('B');
+		else if (type == g.data_sec)
+			return ('D');
+		else if (type == g.text_sec)
+			return ('T');
+		else
+			return ('S');
+	}
 	else
-		return (a);
+	{
+		if (type == N_UNDF || type == N_PBUD)
+			return ('U');
+		if (type == N_ABS)
+			return ('A');
+		if (type == N_INDR)
+			return ('I');
+	}
+	return (' ');
 }

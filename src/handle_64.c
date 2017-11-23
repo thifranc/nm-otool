@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 15:43:39 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 16:34:14 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,8 @@ char	*get_type_64(char **s, struct nlist_64 smb_tab, t_a g)
 {
 	int	type;
 
-	*(*s + 17) = ' ';
 	type = smb_tab.n_type & N_TYPE;
-	if (type == N_SECT)
-	{
-		type = smb_tab.n_sect;
-		if (type == g.bss_sec)
-			*(*s + 17) = 'B';
-		else if (type == g.data_sec)
-			*(*s + 17) = 'D';
-		else if (type == g.text_sec)
-			*(*s + 17) = 'T';
-		else
-			*(*s + 17) = 'S';
-	}
-	else
-	{
-		if (type == N_UNDF || type == N_PBUD)
-			*(*s + 17) = 'U';
-		if (type == N_ABS)
-			*(*s + 17) = 'A';
-		if (type == N_INDR)
-			*(*s + 17) = 'I';
-	}
+	*(*s + 17) = get_type(type, g, smb_tab.n_sect);
 	if (!(smb_tab.n_type & N_EXT))
 		*(*s + 17) = ft_tolower(*(*s + 17));
 	return (NULL);
@@ -67,8 +46,7 @@ char	*fill_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 	return (s);
 }
 
-int		symtab_64(struct symtab_command sc, char *ptr,
-		t_a *g)
+int		symtab_64(struct symtab_command sc, char *ptr, t_a *g)
 {
 	struct nlist_64	*st;
 	struct nlist_64	st_clean;
@@ -143,7 +121,7 @@ int		handle_64(char *ptr, t_a *g)
 			return (ERR_IS_COMPROMISED);
 		i++;
 	}
-	quickSort(&(g->output), 0, g->nsyms - 1, *g);
+	quick_sort(&(g->output), 0, g->nsyms - 1, *g);
 	print_tab(g->output, *g);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 15:43:39 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 15:54:49 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,6 @@ int		handle_file(char *file, t_a *g)
 	}
 	munmap(ptr, g->filesize);
 	return (error_code);
-}
-
-void	init_g_struct(t_a *g)
-{
-	g->data_sec = 0;
-	g->bss_sec = 0;
-	g->text_sec = 0;
-	g->n_sect = 0;
 }
 
 int		handle_all_args(int ac, char **av, t_a *g)

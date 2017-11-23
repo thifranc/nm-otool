@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 15:43:39 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 16:34:14 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,29 +16,8 @@ char	*get_type_32(char **s, struct nlist smb_tab, t_a g)
 {
 	int		type;
 
-	*(*s + 9) = ' ';
 	type = smb_tab.n_type & N_TYPE;
-	if (type == N_SECT)
-	{
-		type = smb_tab.n_sect;
-		if (type == g.bss_sec)
-			*(*s + 9) = 'B';
-		else if (type == g.data_sec)
-			*(*s + 9) = 'D';
-		else if (type == g.text_sec)
-			*(*s + 9) = 'T';
-		else
-			*(*s + 9) = 'S';
-	}
-	else
-	{
-		if (type == N_UNDF || type == N_PBUD)
-			*(*s + 9) = 'U';
-		if (type == N_ABS)
-			*(*s + 9) = 'A';
-		if (type == N_INDR)
-			*(*s + 9) = 'I';
-	}
+	*(*s + 9) = get_type(type, g, smb_tab.n_sect);
 	if (!(smb_tab.n_type & N_EXT))
 		*(*s + 9) = ft_tolower(*(*s + 9));
 	return (NULL);
@@ -141,7 +120,7 @@ int		handle_32(char *ptr, t_a *g)
 			return (ERR_IS_COMPROMISED);
 		i++;
 	}
-	quickSort(&(g->output), 0, g->nsyms - 1, *g);
+	quick_sort(&(g->output), 0, g->nsyms - 1, *g);
 	print_tab(g->output, *g);
 	return (0);
 }

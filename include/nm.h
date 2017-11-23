@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 15:43:16 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 16:34:14 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ typedef struct s_a {
 # define DEBUG dprintf(1, "- %s - %s\n" \
 		, __FILE__, __FUNCTION__);
 
-void	quickSort(char ***arr, int low, int high, t_a g);
+void	quick_sort(char ***arr, int low, int high, t_a g);
 
 int		handle_error(int flag);
 int		is_compromised(long size, long start, long jump, long offset);
@@ -99,5 +99,6 @@ struct symtab_command_64	swap_sc_64(struct symtab_command_64 *sc, char opt);
 
 char	*get_cpu_string(int cputype);
 void	init_g_struct(t_a *g);
+char	get_type(int type, t_a g, int fallback);
 
 #endif
