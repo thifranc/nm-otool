@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 18:31:08 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 11:28:33 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	*fill_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 }
 
 int		symtab_32(struct symtab_command sc, char *ptr,
-		char ***all_string, t_a *g)
+		t_a *g)
 {
 	struct nlist			*st;
 	struct nlist			st_clean;
@@ -75,7 +75,7 @@ int		symtab_32(struct symtab_command sc, char *ptr,
 
 	j = 0;
 	g->nsyms = (int)sc.nsyms;
-	if (!(*all_string = (char**)malloc(sizeof(char *) * sc.nsyms)))
+	if (!(g->output = (char**)malloc(sizeof(char *) * sc.nsyms)))
 		return (ERR_MALLOC);
 	if (!is_compromised(g->filesize, 0, 0, sc.symoff) &&
 			!is_compromised(g->filesize, 0, 0, sc.stroff))
@@ -88,7 +88,7 @@ int		symtab_32(struct symtab_command sc, char *ptr,
 	while (j < g->nsyms)
 	{
 		st_clean = swap_st(st[j], g->opt);
-		if (!((*all_string)[j] = fill_str_32(st_clean,
+		if (!((g->output)[j] = fill_str_32(st_clean,
 						stringtable + st_clean.n_un.n_strx, *g)))
 			return (ERR_MALLOC);
 		j++;
@@ -116,35 +116,33 @@ int		get_n_sect32(struct segment_command *sg, t_a *g)
 	return (0);
 }
 
-int		handle_32(char *ptr, t_a g)
+int		handle_32(char *ptr, t_a *g)
 {
 	struct mach_header		*header;
 	struct load_command		*lc;
 	struct load_command		lc_clean;
 	long long unsigned		i;
-	char					**output;
 
 	header = (struct mach_header *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header);
-	output = NULL;
 	i = 0;
-	g.n_sect = 0;
-	while (i < swaptest((int)header->ncmds, g.opt))
+	g->n_sect = 0;
+	while (i < swaptest((int)header->ncmds, g->opt))
 	{
-		lc_clean = swap_lc(lc, g.opt);
+		lc_clean = swap_lc(lc, g->opt);
 		if (lc_clean.cmd == LC_SEGMENT)
-			get_n_sect32((struct segment_command *)lc, &g);
+			get_n_sect32((struct segment_command *)lc, g);
 		if (lc_clean.cmd == LC_SYMTAB)
-			symtab_32(swap_sc((struct symtab_command *)lc, g.opt),
-					ptr, &output, &g);
-		if (!is_compromised(g.filesize,
+			symtab_32(swap_sc((struct symtab_command *)lc, g->opt),
+					ptr, g);
+		if (!is_compromised(g->filesize,
 					(long)ptr, (long)((void*)lc + lc_clean.cmdsize), 0))
 			lc = (void *)lc + lc_clean.cmdsize;
 		else
 			return (ERR_IS_COMPROMISED);
 		i++;
 	}
-	quickSort(&output, 0, g.nsyms - 1, g);
-	print_tab(output, g);
+	quickSort(&(g->output), 0, g->nsyms - 1, *g);
+	print_tab(g->output, *g);
 	return (0);
 }

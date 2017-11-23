@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 18:37:26 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 11:08:46 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,34 +28,34 @@ char	open_file(char *file, char **ptr, t_a *g)
 	return (0);
 }
 
-int		handle_file(char *file, t_a g)
+int		handle_file(char *file, t_a *g)
 {
 	int				error_code;
 	char			*ptr;
 	unsigned int	magic_number;
 
-	if ((error_code = open_file(file, &ptr, &g)) != 0)
-		return (handle_error(error_code));
+	if ((error_code = open_file(file, &ptr, g)) != 0)
+		return (error_code);
 	else
 	{
-		g.title = file;
+		g->title = file;
 		magic_number = *(int *)ptr;
 		if (magic_number == FAT_MAGIC ||
 			magic_number == FAT_MAGIC_64 ||
 			magic_number == FAT_CIGAM ||
 			magic_number == FAT_CIGAM_64)
 		{
-			g.opt = g.opt | IS_FAT;
-			handle_fat(ptr, g);
+			g->opt = g->opt | IS_FAT;
+			error_code = handle_fat(ptr, g);
 		}
 		else
 		{
-			g.opt = g.opt & ~IS_FAT;
-			handle_macho(ptr, g);
+			g->opt = g->opt & ~IS_FAT;
+			error_code = handle_macho(ptr, g);
 		}
 	}
-	munmap(ptr, g.filesize);
-	return (0);
+	munmap(ptr, g->filesize);
+	return (error_code);
 }
 
 int		main(int ac, char **av)
@@ -76,10 +76,13 @@ int		main(int ac, char **av)
 	{
 		if (av[i][0] != '-')
 		{
-			if ((error = handle_file(av[i], g)) != 0)
+			if ((error = handle_file(av[i], &g)) != 0)
+			{
 				handle_error(error);
+				g.opt = g.opt | HAS_ONE_ERROR;
+			}
 		}
 		i++;
 	}
-	return (0);
+	return (g.opt & HAS_ONE_ERROR ? 1 : 0);
 }

@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 17:41:22 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 11:08:15 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 #define IS_FAT 256
 #define NO_X86_64 512
 #define MANY_ARCHS 1024
+#define HAS_ONE_ERROR 2048
 
 #define N_SECT_MASK 1024
 
@@ -50,6 +51,7 @@ typedef struct s_a {
 	unsigned char	bss_sec;
 	char			*title;
 	char			*cputype;
+	char			**output;
 } t_a;
 
 # include "../libft/libft.h"
@@ -73,10 +75,10 @@ void	quickSort(char ***arr, int low, int high, t_a g);
 int		handle_error(int flag);
 int		is_compromised(long size, long start, long jump, long offset);
 
-int		handle_fat(char *ptr, t_a g);
-int		handle_macho(char *file, t_a g);
-int		handle_64(char *ptr, t_a g);
-int		handle_32(char *ptr, t_a g);
+int		handle_fat(char *ptr, t_a *g);
+int		handle_macho(char *file, t_a *g);
+int		handle_64(char *ptr, t_a *g);
+int		handle_32(char *ptr, t_a *g);
 
 int		parser(int ac, char **av);
 

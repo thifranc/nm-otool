@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 14:48:06 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/17 18:38:07 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 10:15:09 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,16 @@ char	macho_config(char *ptr, unsigned int *options)
 	return (0);
 }
 
-int		handle_macho(char *ptr, t_a g)
+int		handle_macho(char *ptr, t_a *g)
 {
 	int		error_code;
 
-	if ((error_code = macho_config(ptr, &(g.opt))) != 0)
-		handle_error(error_code);
-	if (g.opt & IS_32)
-		handle_32(ptr, g);
+	error_code = 0;
+	if ((error_code = macho_config(ptr, &(g->opt))) != 0)
+		return (error_code);
+	if (g->opt & IS_32)
+		error_code = handle_32(ptr, g);
 	else
-		handle_64(ptr, g);
-	return (0);
+		error_code = handle_64(ptr, g);
+	return (error_code);
 }
