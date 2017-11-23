@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 11:08:46 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 12:27:03 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int		handle_file(char *file, t_a *g)
 		else
 		{
 			g->opt = g->opt & ~IS_FAT;
+			g->opt = g->opt & ~NO_X86_64;
+			g->opt = g->opt & ~MANY_ARCHS;
 			error_code = handle_macho(ptr, g);
 		}
 	}
@@ -82,6 +84,10 @@ int		main(int ac, char **av)
 				g.opt = g.opt | HAS_ONE_ERROR;
 			}
 		}
+		g.data_sec = 0;
+		g.bss_sec = 0;
+		g.text_sec = 0;
+		g.n_sect = 0;
 		i++;
 	}
 	return (g.opt & HAS_ONE_ERROR ? 1 : 0);
