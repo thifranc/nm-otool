@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 16:34:14 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/23 18:25:40 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@
 #define HAS_ONE_ERROR 2048
 
 #define N_SECT_MASK 1024
-
 
 typedef struct s_a {
 	int				filesize;
