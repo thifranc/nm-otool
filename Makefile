@@ -6,7 +6,7 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/11/24 16:44:22 by thifranc         ###   ########.fr        #
+#    Updated: 2017/11/24 17:55:31 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ INC_NM:= $(addprefix $(INC_DIR), $(INC_NM))
 OBJ_NM = $(SRCS_NM:%.c=%.o)
 
 SRCS_OTOOL:= $(addsuffix .c, $(SRCS_OTOOL))
-SRCS_OTOOL:= $(addprefix $(SRC_DIR)ot_, $(SRCS_OTOOL))
+SRCS_OTOOL:= $(addprefix $(SRC_DIR)otool/ot_, $(SRCS_OTOOL))
 INC_OTOOL:= $(addsuffix .h, $(INC_OTOOL))
 INC_OTOOL:= $(addprefix $(INC_DIR), $(INC_OTOOL))
 OBJ_OTOOL = $(SRCS_OTOOL:%.c=%.o)

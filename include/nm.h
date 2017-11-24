@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 14:59:53 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 17:48:44 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,12 @@ int							handle_lc(struct load_command lc_clean,
 							struct load_command *lc, t_a *g, char *ptr);
 
 int							get_n_sect64(struct segment_command_64 *sg, t_a *g);
-int							symtab_64(
-								struct symtab_command sc, char *ptr, t_a *g);
+int							symtab_64(struct symtab_command sc,
+								char *ptr, t_a *g, int j);
 
 int							get_n_sect32(struct segment_command *sg, t_a *g);
-int							symtab_32(
-								struct symtab_command sc, char *ptr, t_a *g);
+int							symtab_32(struct symtab_command sc,
+								char *ptr, t_a *g, int j);
 void						free_tab(char ***tab, int len);
 
 #endif
