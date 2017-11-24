@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:05:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 13:53:44 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 14:27:39 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,4 +72,22 @@ long long unsigned		swaptest(long long int a, char options)
 		return (swap_bits(a));
 	else
 		return (a);
+}
+
+void					free_tab(char ***tab, int len)
+{
+	int	i;
+
+	i = 0;
+	while (i < len)
+	{
+		if ((*tab)[i][0])
+		{
+			free((*tab)[i]);
+			(*tab)[i] = NULL;
+		}
+		i++;
+	}
+	free(*tab);
+	*tab = NULL;
 }

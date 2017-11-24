@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 14:48:06 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 10:54:55 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 14:29:48 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,7 @@ int		handle_macho(char *ptr, t_a *g)
 		error_code = handle_32(ptr, g);
 	else
 		error_code = handle_64(ptr, g);
+	if (!error_code)
+		free_tab(&(g->output), g->nsyms);
 	return (error_code);
 }
