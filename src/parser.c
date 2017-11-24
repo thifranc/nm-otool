@@ -6,31 +6,31 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 18:13:13 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 11:08:12 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/nm.h"
 
-char	get_options(char *arg)
+int		get_options(char *arg)
 {
 	int		i;
-	char	opt;
+	int		opt;
 
 	i = 0;
 	opt = 0;
 	while (arg[i])
 	{
 		if (arg[i] == 'r')
-			opt = opt & OPT_R ? (char)ERR_MULTI_OPT : opt | OPT_R;
+			opt = opt & OPT_R ? opt | ERR_MULTI_OPT : opt | OPT_R;
 		else if (arg[i] == 'j')
-			opt = opt & OPT_J ? (char)ERR_MULTI_OPT : opt | OPT_J;
+			opt = opt & OPT_J ? opt | ERR_MULTI_OPT : opt | OPT_J;
 		else if (arg[i] == 'u')
-			opt = opt & OPT_U ? (char)ERR_MULTI_OPT : opt | OPT_U;
+			opt = opt & OPT_U ? opt | ERR_MULTI_OPT : opt | OPT_U;
 		else if (arg[i] == 'p')
-			opt = opt & OPT_P ? (char)ERR_MULTI_OPT : opt | OPT_P;
+			opt = opt & OPT_P ? opt | ERR_MULTI_OPT : opt | OPT_P;
 		else if (arg[i] == 'n')
-			opt = opt & OPT_N ? (char)ERR_MULTI_OPT : opt | OPT_N;
+			opt = opt & OPT_N ? opt | ERR_MULTI_OPT : opt | OPT_N;
 		i++;
 	}
 	return (opt);
@@ -63,23 +63,18 @@ void	print_bits(int size, void *ptr)
 int		parser(int ac, char **av)
 {
 	int i;
-	int j;
 	int options;
 
 	i = 1;
 	options = 0;
 	while (i < ac)
 	{
-		j = i;
-		while (++j < ac)
-			if (ft_strcmp(av[i], av[j]) == 0)
-				return (ERR_SAME_ARG);
 		if (av[i][0] == '-')
 		{
-			ft_putstr(ft_ptrf("this is options : %s\n", av[i]));
 			options = get_options(av[i] + 1);
-			if (options == ERR_MULTI_OPT)
-				return (ERR_MULTI_OPT);
+			ft_putstr(ft_ptrf("this is options : %s && %d\n", av[i], options));
+			if (options & ERR_MULTI_OPT)
+				return (options);
 		}
 		i++;
 	}

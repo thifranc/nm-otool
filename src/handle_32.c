@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 18:04:56 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 12:02:13 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ int		handle_32(char *ptr, t_a *g)
 	struct load_command		*lc;
 	struct load_command		lc_clean;
 	long long unsigned		i;
+	int						error_code;
 
 	header = (struct mach_header *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header);
@@ -112,7 +113,9 @@ int		handle_32(char *ptr, t_a *g)
 		if (lc_clean.cmd == LC_SEGMENT)
 			get_n_sect32((struct segment_command *)lc, g);
 		if (lc_clean.cmd == LC_SYMTAB)
-			symtab_32(swap_sc((struct symtab_command *)lc, g->opt), ptr, g);
+			if ((error_code =
+		symtab_32(swap_sc((struct symtab_command *)lc, g->opt), ptr, g)) != 0)
+				return (error_code);
 		if (!is_compromised(g->filesize,
 					(long)ptr, (long)((void*)lc + lc_clean.cmdsize), 0))
 			lc = (void *)lc + lc_clean.cmdsize;

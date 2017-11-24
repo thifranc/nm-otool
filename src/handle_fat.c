@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 17:06:17 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 15:19:51 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 12:06:32 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int		fat_arch(char *ptr, t_a *g, int archs)
 	int				i;
 	int				used;
 	int				matched;
+	int				error_code;
 
 	i = 0;
 	used = 0;
@@ -44,7 +45,11 @@ int		fat_arch(char *ptr, t_a *g, int archs)
 		g->cputype = get_cpu_string(swap_bits(arch->cputype));
 		if (!matched ||
 	(matched && swap_bits(arch->cputype) == CPU_TYPE_X86_64 && !used++))
-			handle_macho((void *)ptr + swap_bits(arch->offset), g);
+		{
+			if ((error_code =
+				handle_macho((void *)ptr + swap_bits(arch->offset), g)) != 0)
+				return (error_code);
+		}
 		arch = (struct fat_arch *)((void*)arch + sizeof(struct fat_arch));
 		i++;
 	}
@@ -72,6 +77,7 @@ int		fat_arch_64(char *ptr, t_a *g, int archs)
 	int					i;
 	int					used;
 	int					matched;
+	int					error_code;
 
 	i = 0;
 	used = 0;
@@ -83,7 +89,11 @@ int		fat_arch_64(char *ptr, t_a *g, int archs)
 		g->cputype = get_cpu_string(swap_bits(arch->cputype));
 		if (!matched ||
 		(matched && swap_bits(arch->cputype) == CPU_TYPE_X86_64 && !used++))
-			handle_macho((void *)ptr + swap_bits(arch->offset), g);
+		{
+			if ((error_code =
+				handle_macho((void *)ptr + swap_bits(arch->offset), g)) != 0)
+				return (error_code);
+		}
 		arch = (struct fat_arch_64 *)((void*)arch + sizeof(struct fat_arch_64));
 		i++;
 	}
@@ -93,9 +103,9 @@ int		fat_arch_64(char *ptr, t_a *g, int archs)
 int		handle_fat(char *ptr, t_a *g)
 {
 	struct fat_header	*fat;
-	int					i;
+	int					error_code;
 
-	i = 0;
+	error_code = 0;
 	fat = (struct fat_header *)ptr;
 	g->opt = swap_bits(fat->nfat_arch) > 1 ?
 		g->opt | MANY_ARCHS :
@@ -103,11 +113,11 @@ int		handle_fat(char *ptr, t_a *g)
 	if (fat->magic == FAT_MAGIC_64 ||
 		fat->magic == FAT_CIGAM_64)
 	{
-		fat_arch_64(ptr, g, swap_bits(fat->nfat_arch));
+		error_code = fat_arch_64(ptr, g, swap_bits(fat->nfat_arch));
 	}
 	else
 	{
-		fat_arch(ptr, g, swap_bits(fat->nfat_arch));
+		error_code = fat_arch(ptr, g, swap_bits(fat->nfat_arch));
 	}
-	return (0);
+	return (error_code);
 }

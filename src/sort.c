@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/05 15:41:41 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 18:15:17 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 12:06:07 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,11 @@ void	swap(char **a, char **b)
 int		has_to_swap(char *first, char *second, int jump, int options)
 {
 	if (options & OPT_N)
-		return (ft_strcmp(first, second) <= 0
-				|| (ft_strcmp(first + jump, second + jump) == 0 && ft_strcmp(first, second) <= 0));
+	{
+		return (ft_strcmp(first, second) <= 0 ||
+	(ft_strcmp(first + jump, second + jump) == 0
+	&& ft_strcmp(first, second) <= 0));
+	}
 	if (ft_strcmp(first + jump, second + jump) < 0)
 		return (options & OPT_R ? 0 : 1);
 	else if (ft_strcmp(first + jump, second + jump) == 0 &&

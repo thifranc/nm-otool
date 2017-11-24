@@ -6,11 +6,13 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 15:54:49 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 11:15:21 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/nm.h"
+#include <errno.h>
+#include <string.h>
 
 char	open_file(char *file, char **ptr, t_a *g)
 {
@@ -68,7 +70,7 @@ int		handle_all_args(int ac, char **av, t_a *g)
 		{
 			if ((error = handle_file(av[i], g)) != 0)
 			{
-				handle_error(error);
+				handle_error(error, av[i]);
 				g->opt = g->opt | HAS_ONE_ERROR;
 			}
 			else
@@ -90,8 +92,8 @@ int		main(int ac, char **av)
 		av[1] = "a.out";
 		ac = 2;
 	}
-	if ((g.opt = parser(ac, av)) >= ERR_MULTI_OPT)
-		return (handle_error(g.opt));
+	if ((g.opt = parser(ac, av)) & ERR_MULTI_OPT)
+		return (handle_error(g.opt, "for the option"));
 	else
 		return (handle_all_args(ac, av, &g));
 }

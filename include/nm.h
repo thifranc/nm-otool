@@ -6,15 +6,14 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/23 18:25:40 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 11:01:45 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FT_NM_H
 # define FT_NM_H
 
-#define ERR_MULTI_OPT 256
-#define ERR_SAME_ARG 257
+#define ERR_MULTI_OPT 4096
 
 #define ERR_OPEN 1
 #define ERR_FSTAT 2
@@ -22,7 +21,6 @@
 #define ERR_MAGIC 8
 #define ERR_MALLOC 16
 #define ERR_IS_COMPROMISED 32
-#define ERR_IS_FAT 64
 
 #define OPT_R 1
 #define OPT_P 2
@@ -43,7 +41,7 @@
 typedef struct s_a {
 	int				filesize;
 	int				nsyms;
-	unsigned int	opt;
+	int				opt;
 	unsigned char	n_sect;
 	unsigned char	data_sec;
 	unsigned char	text_sec;
@@ -71,7 +69,7 @@ typedef struct s_a {
 
 void	quick_sort(char ***arr, int low, int high, t_a g);
 
-int		handle_error(int flag);
+int		handle_error(int flag, char *filename);
 int		is_compromised(long size, long start, long jump, long offset);
 
 int		handle_fat(char *ptr, t_a *g);
