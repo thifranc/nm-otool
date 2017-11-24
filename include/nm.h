@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 11:01:45 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 13:41:11 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,5 +97,14 @@ struct symtab_command_64	swap_sc_64(struct symtab_command_64 *sc, char opt);
 char	*get_cpu_string(int cputype);
 void	init_g_struct(t_a *g);
 char	get_type(int type, t_a g, int fallback);
+
+int		handle_lc(struct load_command lc_clean,
+		struct load_command *lc, t_a *g, char *ptr);
+
+int		get_n_sect64(struct segment_command_64 *sg, t_a *g);
+int		symtab_64(struct symtab_command sc, char *ptr, t_a *g);
+
+int		get_n_sect32(struct segment_command *sg, t_a *g);
+int		symtab_32(struct symtab_command sc, char *ptr, t_a *g);
 
 #endif

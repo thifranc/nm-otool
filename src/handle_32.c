@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 12:02:13 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 13:49:13 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,14 @@ char	*fill_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 	return (s);
 }
 
-int		symtab_32(struct symtab_command sc, char *ptr,
-		t_a *g)
+int		symtab_32(struct symtab_command sc, char *ptr, t_a *g)
 {
 	struct nlist			*st;
 	struct nlist			st_clean;
 	char					*stringtable;
 	int						j;
 
-	j = 0;
+	j = -1;
 	g->nsyms = (int)sc.nsyms;
 	if (!(g->output = (char**)malloc(sizeof(char *) * sc.nsyms)))
 		return (ERR_MALLOC);
@@ -64,13 +63,12 @@ int		symtab_32(struct symtab_command sc, char *ptr,
 	}
 	else
 		return (ERR_IS_COMPROMISED);
-	while (j < g->nsyms)
+	while (++j < g->nsyms)
 	{
 		st_clean = swap_st(st[j], g->opt);
 		if (!((g->output)[j] = fill_str_32(st_clean,
 						stringtable + st_clean.n_un.n_strx, *g)))
 			return (ERR_MALLOC);
-		j++;
 	}
 	return (0);
 }
@@ -110,12 +108,8 @@ int		handle_32(char *ptr, t_a *g)
 	while (i < swaptest((int)header->ncmds, g->opt))
 	{
 		lc_clean = swap_lc(lc, g->opt);
-		if (lc_clean.cmd == LC_SEGMENT)
-			get_n_sect32((struct segment_command *)lc, g);
-		if (lc_clean.cmd == LC_SYMTAB)
-			if ((error_code =
-		symtab_32(swap_sc((struct symtab_command *)lc, g->opt), ptr, g)) != 0)
-				return (error_code);
+		if ((error_code = handle_lc(lc_clean, lc, g, ptr)) != 0)
+			return (error_code);
 		if (!is_compromised(g->filesize,
 					(long)ptr, (long)((void*)lc + lc_clean.cmdsize), 0))
 			lc = (void *)lc + lc_clean.cmdsize;
