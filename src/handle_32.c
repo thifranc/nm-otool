@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 14:29:33 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/24 15:58:30 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,8 @@ char	*fill_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 int		symtab_32(struct symtab_command sc, char *ptr, t_a *g)
 {
 	struct nlist			*st;
-	struct nlist			st_clean;
-	char					*stringtable;
+	struct nlist			st_c;
+	char					*strtbl;
 	int						j;
 
 	j = -1;
@@ -56,18 +56,18 @@ int		symtab_32(struct symtab_command sc, char *ptr, t_a *g)
 	if (!(g->output = (char**)malloc(sizeof(char *) * sc.nsyms)))
 		return (ERR_MALLOC);
 	if (!is_compromised(g->filesize, 0, 0, sc.symoff) &&
-			!is_compromised(g->filesize, 0, 0, sc.stroff))
+		!is_compromised(g->filesize, 0, 0, sc.stroff) &&
+		st_c.n_un.n_strx < g->filesize - sc.stroff)
 	{
 		st = (void *)ptr + sc.symoff;
-		stringtable = (void *)ptr + sc.stroff;
+		strtbl = (void *)ptr + sc.stroff;
 	}
 	else
 		return (ERR_IS_COMPROMISED);
 	while (++j < g->nsyms)
 	{
-		st_clean = swap_st(st[j], g->opt);
-		if (!((g->output)[j] = fill_str_32(st_clean,
-						stringtable + st_clean.n_un.n_strx, *g)))
+		st_c = swap_st(st[j], g->opt);
+		if (!((g->output)[j] = fill_str_32(st_c, strtbl + st_c.n_un.n_strx, *g)))
 			return (ERR_MALLOC);
 	}
 	return (0);
