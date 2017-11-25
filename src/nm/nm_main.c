@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 18:10:45 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/25 15:17:59 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,32 +28,42 @@ char	open_file(char *file, char **ptr, t_a *g)
 	return (0);
 }
 
+void	identify_file(char *file, char *ptr, t_a *g)
+{
+	unsigned int	mg_nb;
+
+	g->title = file;
+	mg_nb = *(int *)ptr;
+	if (mg_nb == FAT_MAGIC || mg_nb == FAT_MAGIC_64
+			|| mg_nb == FAT_CIGAM || mg_nb == FAT_CIGAM_64)
+		g->opt = g->opt | IS_FAT;
+	else
+		g->opt = g->opt & ~IS_FAT;
+	if (ft_strncmp(ARMAG, (char*)ptr, 8) == 0)
+		g->opt = g->opt | IS_LIB;
+	else
+		g->opt = g->opt & ~IS_LIB;
+}
+
 int		handle_file(char *file, t_a *g)
 {
 	int				error_code;
 	char			*ptr;
-	unsigned int	mg_nb;
 
 	if ((error_code = open_file(file, &ptr, g)) != 0)
 		return (error_code);
 	else
 	{
-		g->title = file;
-		mg_nb = *(int *)ptr;
-		if (mg_nb == FAT_MAGIC ||
-	mg_nb == FAT_MAGIC_64 || mg_nb == FAT_CIGAM || mg_nb == FAT_CIGAM_64)
-		{
-			g->opt = g->opt | IS_FAT;
+		identify_file(file, ptr, g);
+		if (g->opt & IS_FAT)
 			error_code = handle_fat(ptr, g);
-		}
+		else if (g->opt & IS_LIB)
+			error_code = handle_lib(ptr, g);
 		else
-		{
-			g->opt = g->opt & ~IS_FAT;
 			error_code = handle_macho(ptr, g);
-		}
+		munmap(ptr, g->filesize);
 	}
-	munmap(ptr, g->filesize);
-	return (error_code);
+	return (error_code ? error_code : 0);
 }
 
 int		handle_all_args(int ac, char **av, t_a *g)

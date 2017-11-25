@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 17:48:44 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/25 14:59:28 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 # define NO_X86_64			512
 # define MANY_ARCHS			1024
 # define HAS_ONE_ERROR		2048
+# define IS_LIB				4096
 
 # define N_SECT_MASK		1024
 
@@ -109,4 +110,5 @@ int							symtab_32(struct symtab_command sc,
 								char *ptr, t_a *g, int j);
 void						free_tab(char ***tab, int len);
 
+int							handle_lib(void *ptr, t_a *g);
 #endif

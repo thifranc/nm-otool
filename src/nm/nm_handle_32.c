@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 17:55:32 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/25 13:46:51 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ char	*get_type_32(char **s, struct nlist smb_tab, t_a g)
 	return (NULL);
 }
 
-char	*fill_str_32(struct nlist symb_tab, char *strx_start, t_a g)
+char	*do_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 {
 	int		type;
 	char	*prefill;
@@ -66,7 +66,7 @@ int		symtab_32(struct symtab_command sc, char *ptr, t_a *g, int j)
 		st_c = swap_st(st[j], g->opt);
 		if (st_c.n_un.n_strx >= g->filesize - sc.stroff)
 			return (ERR_IS_COMPROMISED);
-		if (!((g->output)[j] = fill_str_32(st_c, strtbl + st_c.n_un.n_strx, *g)))
+		if (!((g->output)[j] = do_str_32(st_c, strtbl + st_c.n_un.n_strx, *g)))
 			return (ERR_MALLOC);
 	}
 	return (0);
