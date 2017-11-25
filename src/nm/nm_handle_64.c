@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/25 13:46:51 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/25 16:30:51 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ char	*do_str_64(struct nlist_64 symb_tab, char *strx_start, t_a g)
 	type = symb_tab.n_sect == NO_SECT ?
 		symb_tab.n_type & N_TYPE :
 		symb_tab.n_sect | N_SECT_MASK;
-	prefill = symb_tab.n_value ?
-		ft_ptrf("%0*x", symb_tab.n_value, 16) :
-		"                ";
+	prefill = ((symb_tab.n_type & N_TYPE) == N_PBUD) ||
+		((symb_tab.n_type & N_TYPE) == N_UNDF) ?
+		"                " :
+		ft_ptrf("%0*x", symb_tab.n_value, 16);
 	s = ft_ptrf("%s   %s\n", prefill, strx_start);
 	get_type_64(&s, symb_tab, g);
 	return (s);
@@ -79,12 +80,12 @@ int		get_n_sect64(struct segment_command_64 *sg, t_a *g)
 	char				*sectname;
 	long long unsigned	j;
 
-	segname = sg->segname;
 	sec_64 = (void*)sg + sizeof(struct segment_command_64);
 	j = 0;
 	while (j < swaptest((int)sg->nsects, g->opt))
 	{
 		sectname = sec_64[j].sectname;
+		segname = sec_64[j].segname;
 		utils_match_nsect(segname, sectname, g, j);
 		j++;
 	}

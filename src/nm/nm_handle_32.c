@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/25 13:46:51 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/25 16:30:51 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,12 +79,12 @@ int		get_n_sect32(struct segment_command *sg, t_a *g)
 	char				*sectname;
 	long long unsigned	j;
 
-	segname = sg->segname;
 	sec_32 = (void*)sg + sizeof(struct segment_command);
 	j = 0;
 	while (j < swaptest((int)sg->nsects, g->opt))
 	{
 		sectname = sec_32[j].sectname;
+		segname = sec_32[j].segname;
 		utils_match_nsect(segname, sectname, g, j);
 		j++;
 	}
