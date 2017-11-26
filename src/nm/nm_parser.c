@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 16:46:34 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 09:35:56 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,21 +64,25 @@ int		parser(int ac, char **av)
 {
 	int i;
 	int options;
+	int files;
 
 	i = 1;
 	options = 0;
+	files = 0;
 	while (i < ac)
 	{
 		if (av[i][0] == '-')
 		{
-			options = get_options(av[i] + 1);
-			ft_putstr(ft_ptrf("this is options : %s && %d\n", av[i], options));
+			options = options | get_options(av[i] + 1);
 			if (options & ERR_MULTI_OPT)
 				return (options);
+		} else
+		{
+			files++;
 		}
 		i++;
 	}
-	if (ac > 2)
+	if (files > 1)
 		options = options | MANY_ARGS;
 	return (options);
 }

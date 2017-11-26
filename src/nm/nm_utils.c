@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/25 16:28:39 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 09:36:21 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ char	*get_cpu_string(int cputype)
 void	print_tab(char **tab, struct s_a g)
 {
 	int		i;
+	int		jump;
 	char	*title;
 
 	i = 0;
+	jump = g.opt & IS_32 ? 11 : 19;
 	title = "";
 	if (g.opt & MANY_ARGS && !(g.opt & IS_FAT))
 		title = ft_ptrf("\n%s:\n", g.title);
@@ -52,7 +54,9 @@ void	print_tab(char **tab, struct s_a g)
 	ft_putstr(title);
 	while (i < g.nsyms)
 	{
-		ft_putstr(tab[i]);
+		if (!(g.opt & OPT_U) || (g.opt & OPT_U &&
+				(tab[i][jump - 2] == 'U' || tab[i][jump - 2] == 'u')))
+			ft_putstr(g.opt & OPT_J ? tab[i] + jump : tab[i]);
 		i++;
 	}
 }

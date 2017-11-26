@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/25 14:59:28 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 09:27:10 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@
 # define OPT_R				1
 # define OPT_P				2
 # define OPT_N				4
-# define OPT_U				8
-# define OPT_J 				6
+# define OPT_U				24
+# define OPT_J 				16
 # define TO_SWAP			32
 # define IS_32				64
 # define MANY_ARGS			128
