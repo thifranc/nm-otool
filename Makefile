@@ -6,7 +6,7 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/11/26 10:38:32 by thifranc         ###   ########.fr        #
+#    Updated: 2017/11/26 11:13:53 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,13 +19,18 @@ OTOOL = ft_otool
 
 #includes and srcs
 INC_NM = nm
-SRCS_NM = swap sort main\
+SRCS_NM = main\
+	swap sort\
 	parser handle_macho handle_lib\
 	handle_fat handle_64 handle_32\
 	error utils
 
 INC_OTOOL = otool
-SRCS_OTOOL = main handle_64 error swap
+SRCS_OTOOL = main\
+	swap sort\
+	parser handle_macho handle_lib\
+	handle_fat handle_64 handle_32\
+	error utils
 
 #prefix and suffix
 SRCS_NM:= $(addsuffix .c, $(SRCS_NM))

@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 10:32:57 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 11:12:56 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,12 @@ int		handle_file(char *file, t_a *g)
 	else
 	{
 		identify_file(file, ptr, g);
-		/*
 		if (g->opt & IS_FAT)
 			error_code = handle_fat(ptr, g);
 		else if (g->opt & IS_LIB)
 			error_code = handle_lib(ptr, g);
 		else
 			error_code = handle_macho(ptr, g);
-		*/
 		error_code = handle_64(ptr, g);
 		munmap(ptr, g->filesize);
 	}

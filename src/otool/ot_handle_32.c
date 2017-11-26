@@ -6,73 +6,37 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/25 16:30:51 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 11:27:17 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/nm.h"
+#include "../../include/otool.h"
 
-char	*get_type_32(char **s, struct nlist smb_tab, t_a g)
+static void		print_content32(struct section *sect, char *ptr,
+	t_a *g)
 {
-	int		type;
+	uint64_t	size;
+	uint32_t	offset;
+	uint64_t	addr;
+	uint64_t	i;
 
-	type = smb_tab.n_type & N_TYPE;
-	*(*s + 9) = get_type(type, g, smb_tab.n_sect);
-	if (!(smb_tab.n_type & N_EXT))
-		*(*s + 9) = ft_tolower(*(*s + 9));
-	return (NULL);
-}
-
-char	*do_str_32(struct nlist symb_tab, char *strx_start, t_a g)
-{
-	int		type;
-	char	*prefill;
-	char	*s;
-
-	if (symb_tab.n_type & N_STAB)
-		return ("");
-	if (!((s) = (char*)malloc(sizeof(char) * (11 + ft_strlen(strx_start)))))
-		return (NULL);
-	type = symb_tab.n_sect == NO_SECT ?
-		symb_tab.n_type & N_TYPE :
-		symb_tab.n_sect | N_SECT_MASK;
-	prefill = symb_tab.n_value ?
-		ft_ptrf("%0*x", symb_tab.n_value, 8) :
-		"        ";
-	s = ft_ptrf("%s   %s\n", prefill, strx_start);
-	get_type_32(&s, symb_tab, g);
-	return (s);
-}
-
-int		symtab_32(struct symtab_command sc, char *ptr, t_a *g, int j)
-{
-	struct nlist			*st;
-	struct nlist			st_c;
-	char					*strtbl;
-
-	g->nsyms = (int)sc.nsyms;
-	if (!(g->output = (char**)malloc(sizeof(char *) * sc.nsyms)))
-		return (ERR_MALLOC);
-	if (!is_compromised(g->filesize, 0, 0, sc.symoff) &&
-		!is_compromised(g->filesize, 0, 0, sc.stroff))
+	i = 0;
+	size = swaptest(sect->size, g->opt);
+	offset = swaptest(sect->offset, g->opt);
+	addr = swaptest(sect->addr, g->opt);
+	if (!(g->opt & IS_LIB) && !(g->opt & IS_FAT))
+		ft_putstr(ft_ptrf("%s:\n", g->title));
+	while (i < size)
 	{
-		st = (void *)ptr + sc.symoff;
-		strtbl = (void *)ptr + sc.stroff;
+		if (i % 16 == 0)
+			dprintf(1, "\n%016llx\t", (sect->addr + i));
+		dprintf(1, "%02x ", *(ptr + offset + i) & SECTION_TYPE);
+		i++;
 	}
-	else
-		return (ERR_IS_COMPROMISED);
-	while (++j < g->nsyms)
-	{
-		st_c = swap_st(st[j], g->opt);
-		if (st_c.n_un.n_strx >= g->filesize - sc.stroff)
-			return (ERR_IS_COMPROMISED);
-		if (!((g->output)[j] = do_str_32(st_c, strtbl + st_c.n_un.n_strx, *g)))
-			return (ERR_MALLOC);
-	}
-	return (0);
+	write(1, "\n", 1);
 }
 
-int		get_n_sect32(struct segment_command *sg, t_a *g)
+int		get_n_sect32(struct segment_command *sg, char *ptr, t_a *g)
 {
 	struct section		*sec_32;
 	char				*segname;
@@ -85,7 +49,10 @@ int		get_n_sect32(struct segment_command *sg, t_a *g)
 	{
 		sectname = sec_32[j].sectname;
 		segname = sec_32[j].segname;
-		utils_match_nsect(segname, sectname, g, j);
+		if (ft_strcmpi(segname, sectname) == 0 &&
+			((g->opt & OPT_D && !ft_strcmp(sectname, "__data"))
+			 || !ft_strcmp(sectname, "__text")))
+			print_content32(sec_32, ptr, g);
 		j++;
 	}
 	g->n_sect += j;
@@ -98,25 +65,24 @@ int		handle_32(char *ptr, t_a *g)
 	struct load_command		*lc;
 	struct load_command		lc_clean;
 	long long unsigned		i;
-	int						error_code;
 
 	header = (struct mach_header *)ptr;
 	lc = (void *)ptr + sizeof(struct mach_header);
 	i = 0;
-	init_g_struct(g);
 	while (i < swaptest((int)header->ncmds, g->opt))
 	{
 		lc_clean = swap_lc(lc, g->opt);
-		if ((error_code = handle_lc(lc_clean, lc, g, ptr)) != 0)
-			return (error_code);
+		if (lc_clean.cmd == LC_SEGMENT)
+			get_n_sect32((struct segment_command *)lc, ptr, g);
 		if (!is_compromised(g->filesize,
 					(long)ptr, (long)((void*)lc + lc_clean.cmdsize), 0))
 			lc = (void *)lc + lc_clean.cmdsize;
 		else
+		{
+			dprintf(2, "oijoijoij\n");
 			return (ERR_IS_COMPROMISED);
+		}
 		i++;
 	}
-	quick_sort(&(g->output), 0, g->nsyms - 1, *g);
-	print_tab(g->output, *g);
 	return (0);
 }

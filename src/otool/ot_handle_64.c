@@ -6,26 +6,13 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 10:37:52 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 11:27:32 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/otool.h"
 
-int		utils_match_nsect(char *segname,
-		char *sectname, t_a *g)
-{
-	if (ft_strcmpi(segname, sectname) == 0)
-	{
-		if (g->opt & OPT_D && !ft_strcmp(sectname, "__data"))
-			return (1);
-		else if (!ft_strcmp(sectname, "__text"))
-			return (1);
-	}
-	return (0);
-}
-
-static void		print_content(struct section_64 *sect, char *ptr,
+static void		print_content64(struct section_64 *sect, char *ptr,
 	t_a *g)
 {
 	uint64_t	size;
@@ -37,10 +24,8 @@ static void		print_content(struct section_64 *sect, char *ptr,
 	size = swaptest(sect->size, g->opt);
 	offset = swaptest(sect->offset, g->opt);
 	addr = swaptest(sect->addr, g->opt);
-/*
-	if (!g->is_lib && !g->is_fat)
-		ft_printf("%s:\n", *(g->files));
-*/
+	if (!(g->opt & IS_LIB) && !(g->opt & IS_FAT))
+		ft_putstr(ft_ptrf("%s:\n", g->title));
 	while (i < size)
 	{
 		if (i % 16 == 0)
@@ -64,10 +49,10 @@ int		get_n_sect64(struct segment_command_64 *sg, char *ptr, t_a *g)
 	{
 		sectname = sec_64[j].sectname;
 		segname = sec_64[j].segname;
-		if (utils_match_nsect(segname, sectname, g))
-		{
-			print_content(sec_64, ptr, g);
-		}
+		if (ft_strcmpi(segname, sectname) == 0 &&
+			((g->opt & OPT_D && !ft_strcmp(sectname, "__data"))
+			 || !ft_strcmp(sectname, "__text")))
+			print_content64(sec_64, ptr, g);
 		j++;
 	}
 	g->n_sect += j;
@@ -93,7 +78,10 @@ int		handle_64(char *ptr, t_a *g)
 					(long)ptr, (long)((void*)lc + lc_clean.cmdsize), 0))
 			lc = (void *)lc + lc_clean.cmdsize;
 		else
+		{
+			dprintf(2, "oijoijoij\n");
 			return (ERR_IS_COMPROMISED);
+		}
 		i++;
 	}
 	return (0);
