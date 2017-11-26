@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ot_main.c                                          :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/11/24 16:50:31 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 16:59:31 by thifranc         ###   ########.fr       */
+/*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
+/*   Updated: 2017/11/26 10:32:57 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,33 +28,45 @@ char	open_file(char *file, char **ptr, t_a *g)
 	return (0);
 }
 
+void	identify_file(char *file, char *ptr, t_a *g)
+{
+	unsigned int	mg_nb;
+
+	g->title = file;
+	mg_nb = *(int *)ptr;
+	if (mg_nb == FAT_MAGIC || mg_nb == FAT_MAGIC_64
+			|| mg_nb == FAT_CIGAM || mg_nb == FAT_CIGAM_64)
+		g->opt = g->opt | IS_FAT;
+	else
+		g->opt = g->opt & ~IS_FAT;
+	if (ft_strncmp(ARMAG, (char*)ptr, 8) == 0)
+		g->opt = g->opt | IS_LIB;
+	else
+		g->opt = g->opt & ~IS_LIB;
+}
+
 int		handle_file(char *file, t_a *g)
 {
 	int				error_code;
 	char			*ptr;
-	unsigned int	mg_nb;
 
-	error_code = 0;
 	if ((error_code = open_file(file, &ptr, g)) != 0)
 		return (error_code);
 	else
 	{
-		g->title = file;
-		mg_nb = *(int *)ptr;
-		if (mg_nb == FAT_MAGIC ||
-				mg_nb == FAT_MAGIC_64 || mg_nb == FAT_CIGAM || mg_nb == FAT_CIGAM_64)
-		{
-			g->opt = g->opt | IS_FAT;
-			//error_code = handle_fat(ptr, g);
-		}
+		identify_file(file, ptr, g);
+		/*
+		if (g->opt & IS_FAT)
+			error_code = handle_fat(ptr, g);
+		else if (g->opt & IS_LIB)
+			error_code = handle_lib(ptr, g);
 		else
-		{
-			g->opt = g->opt & ~IS_FAT;
-			//error_code = handle_macho(ptr, g);
-		}
+			error_code = handle_macho(ptr, g);
+		*/
+		error_code = handle_64(ptr, g);
+		munmap(ptr, g->filesize);
 	}
-	munmap(ptr, g->filesize);
-	return (error_code);
+	return (error_code ? error_code : 0);
 }
 
 int		handle_all_args(int ac, char **av, t_a *g)
@@ -65,10 +77,13 @@ int		handle_all_args(int ac, char **av, t_a *g)
 	i = 1;
 	while (i < ac)
 	{
-		if ((error = handle_file(av[i], g)) != 0)
+		if (av[i][0] != '-')
 		{
-			//handle_error(error, av[i]);
-			g->opt = g->opt | HAS_ONE_ERROR;
+			if ((error = handle_file(av[i], g)) != 0)
+			{
+				handle_error(error, av[i]);
+				g->opt = g->opt | HAS_ONE_ERROR;
+			}
 		}
 		i++;
 	}
@@ -81,7 +96,7 @@ int		main(int ac, char **av)
 
 	if (ac == 1)
 	{
-		//handle_error(ERR_NO_ARG, "at least one file must be specified");
+		handle_error(ERR_NO_ARG, "at least one file must be specified");
 		return (0);
 	}
 	else

@@ -6,7 +6,7 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/11/25 15:05:57 by thifranc         ###   ########.fr        #
+#    Updated: 2017/11/26 10:38:32 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ SRCS_NM = swap sort main\
 	error utils
 
 INC_OTOOL = otool
-SRCS_OTOOL = 
+SRCS_OTOOL = main handle_64 error swap
 
 #prefix and suffix
 SRCS_NM:= $(addsuffix .c, $(SRCS_NM))
@@ -51,7 +51,7 @@ $(NM):
 	gcc $(FLAGS) $(SRCS_NM) libft/libft.a -I$(INC_NM) -o $(NM) $(OPT_FLAGS)
 
 $(OTOOL):
-	gcc $(FLAGS) $(SRCS_OTOOL) -I$(INC_OTOOL) -o $(OTOOL) $(OPT_FLAGS)
+	gcc $(FLAGS) $(SRCS_OTOOL) libft/libft.a -I$(INC_OTOOL) -o $(OTOOL) $(OPT_FLAGS)
 
 nm: $(NM)
 otool: $(OTOOL)
@@ -66,7 +66,7 @@ fclean: clean
 	@make clean -C libft/
 
 re: fclean all
-	@make fclean -C libft/
+	@make re -C libft/
 	@echo "fclean + all"
 
 .PHONY: all clean fclean re
