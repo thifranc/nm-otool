@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 16:33:58 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 18:14:18 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,8 +110,7 @@ int		handle_64(char *ptr, t_a *g)
 		lc_clean = swap_lc(lc, g->opt);
 		if ((error_code = handle_lc(lc_clean, lc, g, ptr)) != 0)
 			return (error_code);
-		if (!is_compromised(
-					g->filesize, (long)ptr,
+		if (!is_compromised(g->filesize, (long)ptr,
 					(long)((void*)lc + lc_clean.cmdsize), 0))
 			lc = (void *)lc + lc_clean.cmdsize;
 		else

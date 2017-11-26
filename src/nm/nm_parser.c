@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 09:35:56 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 18:10:17 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,9 @@ int		parser(int ac, char **av)
 			options = options | get_options(av[i] + 1);
 			if (options & ERR_MULTI_OPT)
 				return (options);
-		} else
-		{
-			files++;
 		}
+		else
+			files++;
 		i++;
 	}
 	if (files > 1)

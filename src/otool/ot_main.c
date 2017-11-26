@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 16:33:13 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 18:54:59 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ int		handle_all_args(int ac, char **av, t_a *g)
 			if ((error = handle_file(av[i], g)) != 0)
 			{
 				handle_error(error, av[i]);
-				g->opt = g->opt | HAS_ONE_ERROR;
+				if (flag == ERR_OPEN || flag == ERR_IS_COMPROMISED)
+					break ;
 			}
 		}
 		i++;

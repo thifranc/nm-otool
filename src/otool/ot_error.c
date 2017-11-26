@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:05:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 16:42:39 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 18:54:58 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int						handle_error(int flag, char *filename)
 	char	*error;
 	char	*msg;
 
+	dprintf(1, "error trigger\n");
 	if (flag == ERR_MAGIC)
 		error = "The file was not recognized as a valid object file";
 	if (flag == ERR_OPEN)
@@ -30,8 +31,9 @@ int						handle_error(int flag, char *filename)
 	if (flag & ERR_MULTI_OPT)
 		error = "may only occur zero or one times!";
 	msg = ft_ptrf("ft_nm: %s: %s\n%s",
-			filename, error, flag == ERR_MAGIC ? "\n" : "");
-	ft_putstr_fd(msg, 1);
+			filename, error,
+			(flag == ERR_OPEN || flag == ERR_IS_COMPROMISED) ? "\n" : "");
+	ft_putstr_fd(msg, flag == ERR_OPEN ? 2 : 1);
 	free(msg);
 	msg = NULL;
 	return (1);

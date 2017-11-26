@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/25 16:30:51 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 18:13:16 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,10 @@ char	*do_str_32(struct nlist symb_tab, char *strx_start, t_a g)
 	type = symb_tab.n_sect == NO_SECT ?
 		symb_tab.n_type & N_TYPE :
 		symb_tab.n_sect | N_SECT_MASK;
-	prefill = symb_tab.n_value ?
-		ft_ptrf("%0*x", symb_tab.n_value, 8) :
-		"        ";
+	prefill = ((symb_tab.n_type & N_TYPE) == N_PBUD) ||
+		((symb_tab.n_type & N_TYPE) == N_UNDF) ?
+		"        " :
+		ft_ptrf("%0*x", symb_tab.n_value, 8);
 	s = ft_ptrf("%s   %s\n", prefill, strx_start);
 	get_type_32(&s, symb_tab, g);
 	return (s);
