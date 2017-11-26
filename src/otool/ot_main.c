@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 11:12:56 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 16:33:13 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,6 @@ int		handle_file(char *file, t_a *g)
 			error_code = handle_lib(ptr, g);
 		else
 			error_code = handle_macho(ptr, g);
-		error_code = handle_64(ptr, g);
 		munmap(ptr, g->filesize);
 	}
 	return (error_code ? error_code : 0);

@@ -6,7 +6,7 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/11/26 11:13:53 by thifranc         ###   ########.fr        #
+#    Updated: 2017/11/26 16:22:26 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -71,7 +71,7 @@ fclean: clean
 	@make clean -C libft/
 
 re: fclean all
-	@make re -C libft/
+	@make -C libft/
 	@echo "fclean + all"
 
 .PHONY: all clean fclean re

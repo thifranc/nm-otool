@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:05:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 10:21:38 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/26 16:42:39 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int						handle_error(int flag, char *filename)
 		error = "may only occur zero or one times!";
 	msg = ft_ptrf("ft_nm: %s: %s\n%s",
 			filename, error, flag == ERR_MAGIC ? "\n" : "");
-	ft_putstr_fd(msg, 2);
+	ft_putstr_fd(msg, 1);
 	free(msg);
 	msg = NULL;
 	return (1);
