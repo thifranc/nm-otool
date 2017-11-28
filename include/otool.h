@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 11:12:33 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/28 20:52:14 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,6 @@ int							handle_lc(struct load_command lc_clean,
 void						free_tab(char ***tab, int len);
 
 int							handle_lib(void *ptr, t_a *g);
+void	print_ppc_style(int size, int offset,
+		int addr, char *ptr);
 #endif

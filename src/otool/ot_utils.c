@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 16:20:08 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/28 20:52:11 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,63 +34,18 @@ char	*get_cpu_string(int cputype)
 	return (ret);
 }
 
-void	print_tab(char **tab, struct s_a g)
+void	print_ppc_style(int size, int offset,
+		int addr, char *ptr)
 {
-	int		i;
-	int		jump;
-	char	*title;
+	int	i;
 
 	i = 0;
-	jump = g.opt & IS_32 ? 11 : 19;
-	title = "";
-	if (g.opt & MANY_ARGS && !(g.opt & IS_FAT))
-		title = ft_ptrf("\n%s:\n", g.title);
-	else if (g.opt & NO_X86_64)
+	while (i < size)
 	{
-		title = ft_ptrf("\n%s (for architecture %s):\n", g.title, g.cputype);
-		if (!(g.opt & MANY_ARCHS))
-			title = ft_ptrf("%s:\n", g.title);
-	}
-	ft_putstr(title);
-	while (i < g.nsyms)
-	{
-		if (!(g.opt & OPT_U) || (g.opt & OPT_U &&
-				(tab[i][jump - 2] == 'U' || tab[i][jump - 2] == 'u')))
-			ft_putstr(g.opt & OPT_J ? tab[i] + jump : tab[i]);
+		if (i % 16 == 0)
+			ft_putstrdel(ft_ptrf("\n%0*x\t", (addr + i), 8));
+		ft_putstrdel(ft_ptrf("%0*x%s",
+			*(ptr + offset + i) & SECTION_TYPE, 2, ((i + 1) % 4) ? "" : " "));
 		i++;
 	}
-}
-
-void	init_g_struct(t_a *g)
-{
-	g->data_sec = 0;
-	g->bss_sec = 0;
-	g->text_sec = 0;
-	g->n_sect = 0;
-}
-
-char	get_type(int type, t_a g, int fallback)
-{
-	if (type == N_SECT)
-	{
-		type = fallback;
-		if (type == g.bss_sec)
-			return ('B');
-		else if (type == g.data_sec)
-			return ('D');
-		else if (type == g.text_sec)
-			return ('T');
-		else
-			return ('S');
-	}
-	else
-	{
-		if (type == N_UNDF || type == N_PBUD)
-			return ('U');
-		if (type == N_ABS)
-			return ('A');
-		if (type == N_INDR)
-			return ('I');
-	}
-	return (' ');
 }

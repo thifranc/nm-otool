@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/28 19:36:43 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/28 19:48:22 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	print_tab(char **tab, struct s_a g)
 
 	i = 0;
 	jump = g.opt & IS_32 ? 11 : 19;
-	title = "";
+	title = ft_ptrf("");
 	if (g.opt & MANY_ARGS && !(g.opt & IS_FAT))
 		title = ft_ptrf("\n%s:\n", g.title);
 	else if (g.opt & NO_X86_64)

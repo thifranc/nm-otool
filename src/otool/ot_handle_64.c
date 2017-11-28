@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/28 19:37:29 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/28 20:51:13 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,22 +24,24 @@ static void		print_content64(struct section_64 *sect, char *ptr,
 	size = swaptest(sect->size, g->opt);
 	offset = swaptest(sect->offset, g->opt);
 	addr = swaptest(sect->addr, g->opt);
-	if (!(g->opt & IS_LIB) && !(g->opt & IS_FAT))
+	if ((!(g->opt & IS_LIB) && !(g->opt & IS_FAT)) ||
+		((g->opt & IS_FAT) && !(g->opt & NO_X86_64)))
 		ft_putstrdel(ft_ptrf("%s:\n", g->title));
-	if (g->opt & IS_FAT && g->opt & MANY_ARCHS)
+	if (g->opt & IS_FAT && g->opt & NO_X86_64)
 		ft_putstrdel(ft_ptrf("%s (architecture %s):\n", g->title, g->cputype));
-	dprintf(1, "Contents of (%s,%s) section", sect->segname, sect->sectname);
+	ft_putstrdel(ft_ptrf("Contents of (%s,%s) section",
+				sect->segname, sect->sectname));
 	while (i < size)
 	{
 		if (i % 16 == 0)
-			dprintf(1, "\n%016llx\t", (sect->addr + i));
-		dprintf(1, "%02x ", *(ptr + offset + i) & SECTION_TYPE);
+			ft_putstrdel(ft_ptrf("\n%0*x\t", (addr + i), 16));
+		ft_putstrdel(ft_ptrf("%0*x ", *(ptr + offset + i) & SECTION_TYPE, 2));
 		i++;
 	}
 	write(1, "\n", 1);
 }
 
-int		get_n_sect64(struct segment_command_64 *sg, char *ptr, t_a *g)
+int				get_n_sect64(struct segment_command_64 *sg, char *ptr, t_a *g)
 {
 	struct section_64	*sec_64;
 	char				*segname;
@@ -54,7 +56,7 @@ int		get_n_sect64(struct segment_command_64 *sg, char *ptr, t_a *g)
 		segname = sec_64[j].segname;
 		if (ft_strcmpi(segname, sectname) == 0 &&
 			((g->opt & OPT_D && !ft_strcmp(sectname, "__data"))
-			 || !ft_strcmp(sectname, "__text")))
+				|| !ft_strcmp(sectname, "__text")))
 			print_content64(sec_64, ptr, g);
 		j++;
 	}
@@ -62,7 +64,7 @@ int		get_n_sect64(struct segment_command_64 *sg, char *ptr, t_a *g)
 	return (0);
 }
 
-int		handle_64(char *ptr, t_a *g)
+int				handle_64(char *ptr, t_a *g)
 {
 	struct mach_header_64	*header;
 	struct load_command		*lc;
