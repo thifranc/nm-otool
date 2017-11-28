@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 17:56:37 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/28 19:37:29 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ static void		print_content32(struct section *sect, char *ptr,
 	offset = swaptest(sect->offset, g->opt);
 	addr = swaptest(sect->addr, g->opt);
 	if (!(g->opt & IS_LIB) && !(g->opt & IS_FAT))
-		ft_putstr(ft_ptrf("%s:\n", g->title));
+		ft_putstrdel(ft_ptrf("%s:\n", g->title));
 	if (g->opt & IS_FAT && g->opt & MANY_ARCHS)
-		ft_putstr(ft_ptrf("%s (architecture %s):\n", g->title, g->cputype));
+		ft_putstrdel(ft_ptrf("%s (architecture %s):\n", g->title, g->cputype));
 	dprintf(1, "Contents of (%s,%s) section", sect->segname, sect->sectname);
 	while (i < size)
 	{

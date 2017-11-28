@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 09:36:21 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/28 19:36:43 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	print_tab(char **tab, struct s_a g)
 		if (!(g.opt & MANY_ARCHS))
 			title = ft_ptrf("%s:\n", g.title);
 	}
-	ft_putstr(title);
+	ft_putstrdel(title);
 	while (i < g.nsyms)
 	{
 		if (!(g.opt & OPT_U) || (g.opt & OPT_U &&

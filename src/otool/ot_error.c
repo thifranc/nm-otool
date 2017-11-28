@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:05:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 18:54:58 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/28 19:31:49 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int						handle_error(int flag, char *filename)
 	char	*error;
 	char	*msg;
 
-	dprintf(1, "error trigger\n");
 	if (flag == ERR_MAGIC)
 		error = "The file was not recognized as a valid object file";
 	if (flag == ERR_OPEN)
