@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/28 20:51:13 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/28 21:18:48 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,13 +31,12 @@ static void		print_content32(struct section *sect, char *ptr,
 		ft_putstrdel(ft_ptrf("%s (architecture %s):\n", g->title, g->cputype));
 	ft_putstrdel(ft_ptrf("Contents of (%s,%s) section",
 				sect->segname, sect->sectname));
-	while (i < size)
-	{
-		if (i % 16 == 0)
-			ft_putstrdel(ft_ptrf("\n%0*x\t", (addr + i), 16));
-		ft_putstrdel(ft_ptrf("%0*x ", *(ptr + offset + i) & SECTION_TYPE, 2));
-		i++;
-	}
+	if (!ft_strcmp(g->cputype, "ppc"))
+		print_ppc_style(size, offset, addr, ptr);
+	else if (g->opt & IS_32)
+		print_classic32(size, offset, addr, ptr);
+	else
+		print_classic64(size, offset, addr, ptr);
 	write(1, "\n", 1);
 }
 
