@@ -6,37 +6,40 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/30 15:26:22 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 16:29:21 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "otool.h"
 
-static void		print_content32(struct section *sect, char *ptr,
-	t_a *g)
+static void		print_content32(uint64_t size, uint64_t offset,
+		struct section *sect, char *ptr, t_a *g)
 {
-	uint64_t	size;
-	uint32_t	offset;
 	uint64_t	addr;
 	uint64_t	i;
 
 	i = 0;
-	size = swaptest(sect->size, g->opt);
-	offset = swaptest(sect->offset, g->opt);
 	addr = swaptest(sect->addr, g->opt);
-	if ((!(g->opt & IS_LIB) && !(g->opt & IS_FAT)) ||
-		((g->opt & IS_FAT) && !(g->opt & NO_X86_64)))
-		ft_putstrdel(ft_ptrf("%s:\n", g->title));
-	if (g->opt & IS_FAT && g->opt & NO_X86_64)
-		ft_putstrdel(ft_ptrf("%s (architecture %s):\n", g->title, g->cputype));
-	ft_putstrdel(ft_ptrf("Contents of (%s,%s) section",
-				sect->segname, sect->sectname));
-	if (!ft_strcmp(g->cputype, "ppc"))
+
+	print_title(*g, sect->sectname, sect->segname);
+
+	if (g->cputype && !ft_strcmp(g->cputype, "ppc"))
 		print_ppc_style(size, offset, addr, ptr);
+	else
+	{
+		while (i < size)
+		{
+			if (i % 16 == 0)
+				ft_putstrdel(ft_ptrf("\n%0*x\t", (addr + i), 8));
+			ft_putstrdel(ft_ptrf("%0*x ", *(ptr + offset + i) & SECTION_TYPE, 2));
+			i++;
+		}
+	}
+	/*
 	else if (g->opt & IS_32)
 		print_classic32(size, offset, addr, ptr);
-	else
 		print_classic64(size, offset, addr, ptr);
+		*/
 	write(1, "\n", 1);
 }
 
@@ -54,9 +57,10 @@ int				get_n_sect32(struct segment_command *sg, char *ptr, t_a *g)
 		sectname = sec_32[j].sectname;
 		segname = sec_32[j].segname;
 		if (ft_strcmpi(segname, sectname) == 0 &&
-			((g->opt & OPT_D && !ft_strcmp(sectname, "__data"))
-				|| !ft_strcmp(sectname, "__text")))
-			print_content32(sec_32, ptr, g);
+				((g->opt & OPT_D && !ft_strcmp(sectname, "__data"))
+				 || !ft_strcmp(sectname, "__text")))
+			print_content32(swaptest(sec_32->size, g->opt),
+					swaptest(sec_32->offset, g->opt), sec_32, ptr, g);
 		j++;
 	}
 	g->n_sect += j;

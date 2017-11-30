@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/30 15:26:55 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 16:24:04 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@ void	print_classic64(int size, int offset, int addr, char *ptr)
 		ft_putstrdel(ft_ptrf("%0*x ", *(ptr + offset + i) & SECTION_TYPE, 2));
 		i++;
 	}
+}
+
+void	print_title(t_a g, char *sectname, char *segname)
+{
+	if ((!(g.opt & IS_LIB) && !(g.opt & IS_FAT)) ||
+		((g.opt & IS_FAT) && !(g.opt & NO_X86_64)))
+		ft_putstrdel(ft_ptrf("%s:\n", g.title));
+	if (g.opt & IS_FAT && g.opt & NO_X86_64)
+		ft_putstrdel(ft_ptrf("%s (architecture %s):\n", g.title, g.cputype));
+	ft_putstrdel(ft_ptrf("Contents of (%s,%s) section",
+				segname, sectname));
 }
 
 void	print_classic32(int size, int offset, int addr, char *ptr)

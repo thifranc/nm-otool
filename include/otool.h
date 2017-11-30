@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/12 18:48:32 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/28 21:16:42 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 16:24:03 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,4 +102,5 @@ int							handle_lib(void *ptr, t_a *g);
 void	print_ppc_style(int size, int offset, int addr, char *ptr);
 void	print_classic32(int size, int offset, int addr, char *ptr);
 void	print_classic64(int size, int offset, int addr, char *ptr);
+void	print_title(t_a g, char *sectname, char *segname);
 #endif
