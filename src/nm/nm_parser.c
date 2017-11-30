@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:27:25 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 18:10:17 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 12:26:53 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/nm.h"
+#include "nm.h"
 
 int		get_options(char *arg)
 {

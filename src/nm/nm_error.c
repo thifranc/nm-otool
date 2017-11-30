@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:05:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/25 16:29:53 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 12:26:00 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/nm.h"
+#include "nm.h"
 
 int						handle_error(int flag, char *filename)
 {

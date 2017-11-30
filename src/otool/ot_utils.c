@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/28 21:15:49 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 15:26:55 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/nm.h"
+#include "otool.h"
 
 char	*get_cpu_string(int cputype)
 {

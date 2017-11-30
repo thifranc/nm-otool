@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/03 17:06:17 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 16:46:21 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 12:26:41 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/nm.h"
+#include "nm.h"
 
 int		match_cpu(int archs, struct fat_arch *arch)
 {

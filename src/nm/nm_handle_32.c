@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:40:59 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 18:13:16 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 12:26:33 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/nm.h"
+#include "nm.h"
 
 char	*get_type_32(char **s, struct nlist smb_tab, t_a g)
 {

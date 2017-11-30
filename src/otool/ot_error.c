@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 15:05:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/28 19:31:49 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 15:26:18 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/nm.h"
+#include "otool.h"
 
 int						handle_error(int flag, char *filename)
 {

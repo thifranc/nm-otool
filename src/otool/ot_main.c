@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 11:57:56 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/28 19:41:04 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 15:26:36 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/otool.h"
+#include "otool.h"
 
 char	open_file(char *file, char **ptr, t_a *g)
 {

@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/17 18:45:35 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/26 16:09:40 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 15:26:41 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/otool.h"
+#include "otool.h"
 
 struct load_command		swap_lc(struct load_command *lc, char opt)
 {

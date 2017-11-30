@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/24 14:48:06 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/28 20:38:32 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 12:26:48 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/nm.h"
+#include "nm.h"
 
 char	macho_config(char *ptr, int *options)
 {

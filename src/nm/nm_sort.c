@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/05 15:41:41 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/24 16:46:36 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 12:26:55 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/nm.h"
+#include "nm.h"
 
 void	swap(char **a, char **b)
 {

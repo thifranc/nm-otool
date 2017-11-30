@@ -6,11 +6,11 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/23 17:41:38 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/28 21:18:48 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 15:26:26 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/otool.h"
+#include "otool.h"
 
 static void		print_content64(struct section_64 *sect, char *ptr,
 	t_a *g)

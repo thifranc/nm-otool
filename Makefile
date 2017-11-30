@@ -6,72 +6,82 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/11/26 16:22:26 by thifranc         ###   ########.fr        #
+#    Updated: 2017/11/30 15:24:27 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRC_DIR = src/
 INC_DIR = include/
+LIBPATH = libft/
+LDFLAGS = -L $(LIBPATH) -lft
 
 #executables name
 NM = ft_nm
 OTOOL = ft_otool
 
 #includes and srcs
-INC_NM = nm
 SRCS_NM = main\
 	swap sort\
 	parser handle_macho handle_lib\
 	handle_fat handle_64 handle_32\
 	error utils
 
-INC_OTOOL = otool
 SRCS_OTOOL = main\
-	swap sort\
+	swap\
 	parser handle_macho handle_lib\
 	handle_fat handle_64 handle_32\
 	error utils
 
 #prefix and suffix
 SRCS_NM:= $(addsuffix .c, $(SRCS_NM))
-SRCS_NM:= $(addprefix $(SRC_DIR)nm/nm_, $(SRCS_NM))
-INC_NM:= $(addsuffix .h, $(INC_NM))
-INC_NM:= $(addprefix $(INC_DIR), $(INC_NM))
-OBJ_NM = $(SRCS_NM:%.c=%.o)
-
 SRCS_OTOOL:= $(addsuffix .c, $(SRCS_OTOOL))
-SRCS_OTOOL:= $(addprefix $(SRC_DIR)otool/ot_, $(SRCS_OTOOL))
-INC_OTOOL:= $(addsuffix .h, $(INC_OTOOL))
-INC_OTOOL:= $(addprefix $(INC_DIR), $(INC_OTOOL))
-OBJ_OTOOL = $(SRCS_OTOOL:%.c=%.o)
+
+#objects files
+OBJDIR = objs
+
+NM_OBJS = $(patsubst %.c, $(OBJDIR)/nm/%.o, $(SRCS_NM))
+OTOOL_OBJS = $(patsubst %.c, $(OBJDIR)/otool/%.o, $(SRCS_OTOOL))
+
 
 #compilation flags
 FLAGS = -Wall -Werror -Wextra
 
-OPT_FLAGS = 
+#paths
+NM_PATH:= src/nm/
+OTOOL_PATH:= src/otool/
+
+$(OBJDIR)/nm/%.o: $(NM_PATH)nm_%.c
+	@gcc $(FLAGS) -o $@ -c $< -I $(LIBPATH) -I $(INC_DIR)
+
+$(OBJDIR)/otool/%.o: $(OTOOL_PATH)ot_%.c
+	@gcc $(FLAGS) -o $@ -c $< -I $(LIBPATH) -I $(INC_DIR)
 
 all: $(NM) $(OTOOL)
 
-$(NM):
-	gcc $(FLAGS) $(SRCS_NM) libft/libft.a -I$(INC_NM) -o $(NM) $(OPT_FLAGS)
+$(NM): $(NM_OBJS)
+	@make -C $(LIBPATH)
+	@gcc $(FLAGS) $(LDFLAGS) -o $(NM) $(NM_OBJS)
 
-$(OTOOL):
-	gcc $(FLAGS) $(SRCS_OTOOL) libft/libft.a -I$(INC_OTOOL) -o $(OTOOL) $(OPT_FLAGS)
+$(OTOOL): $(OTOOL_OBJS)
+	@make -C $(LIBPATH)
+	@gcc $(FLAGS) $(LDFLAGS) -o $(OTOOL) $(OTOOL_OBJS)
 
-nm: $(NM)
-otool: $(OTOOL)
+$(LIB):
+	@make -C $(LIBPATH)
+
+
+nm: $(LIB) $(NM)
+otool: $(LIB) $(OTOOL)
 
 clean:
-	@$(RM) $(OBJ_NM)
-	@$(RM) $(OBJ_OTOOL)
-	@echo "erasing all binary files"
+	@make clean -C libft/
+	@$(RM) $(NM_OBJS)
+	@$(RM) $(OTOOL_OBJS)
 
 fclean: clean
+	@make fclean -C libft/
 	@$(RM) $(OTOOL) $(NM)
-	@make clean -C libft/
 
 re: fclean all
-	@make -C libft/
-	@echo "fclean + all"
 
 .PHONY: all clean fclean re
