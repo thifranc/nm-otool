@@ -6,7 +6,7 @@
 /*   By: thifranc <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/11/02 12:46:07 by thifranc          #+#    #+#             */
-/*   Updated: 2017/11/30 16:24:04 by thifranc         ###   ########.fr       */
+/*   Updated: 2017/11/30 16:51:26 by thifranc         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,6 @@ char	*get_cpu_string(int cputype)
 	return (ret);
 }
 
-void	print_classic64(int size, int offset, int addr, char *ptr)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (i % 16 == 0)
-			ft_putstrdel(ft_ptrf("\n%0*x\t", (addr + i), 16));
-		ft_putstrdel(ft_ptrf("%0*x ", *(ptr + offset + i) & SECTION_TYPE, 2));
-		i++;
-	}
-}
-
 void	print_title(t_a g, char *sectname, char *segname)
 {
 	if ((!(g.opt & IS_LIB) && !(g.opt & IS_FAT)) ||
@@ -57,20 +43,6 @@ void	print_title(t_a g, char *sectname, char *segname)
 		ft_putstrdel(ft_ptrf("%s (architecture %s):\n", g.title, g.cputype));
 	ft_putstrdel(ft_ptrf("Contents of (%s,%s) section",
 				segname, sectname));
-}
-
-void	print_classic32(int size, int offset, int addr, char *ptr)
-{
-	int	i;
-
-	i = 0;
-	while (i < size)
-	{
-		if (i % 16 == 0)
-			ft_putstrdel(ft_ptrf("\n%0*x\t", (addr + i), 8));
-		ft_putstrdel(ft_ptrf("%0*x ", *(ptr + offset + i) & SECTION_TYPE, 2));
-		i++;
-	}
 }
 
 void	print_ppc_style(int size, int offset, int addr, char *ptr)

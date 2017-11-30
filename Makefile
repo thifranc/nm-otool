@@ -6,7 +6,7 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/11/30 16:44:51 by thifranc         ###   ########.fr        #
+#    Updated: 2017/11/30 17:12:51 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,7 +28,7 @@ SRCS_NM = main\
 
 SRCS_OTOOL = main\
 	swap\
-	parser handle_macho handle_lib\
+	handle_macho handle_lib\
 	handle_fat handle_64 handle_32\
 	error utils
 
