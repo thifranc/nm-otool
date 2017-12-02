@@ -6,7 +6,7 @@
 #    By: thifranc <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/02/04 19:24:34 by thifranc          #+#    #+#              #
-#    Updated: 2017/11/30 17:12:51 by thifranc         ###   ########.fr        #
+#    Updated: 2017/12/02 12:47:14 by thifranc         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,13 +50,18 @@ FLAGS = -Wall -Werror -Wextra
 NM_PATH:= src/nm/
 OTOOL_PATH:= src/otool/
 
-$(OBJDIR)/nm/%.o: $(NM_PATH)nm_%.c
+$(OBJDIR)/nm/%.o: $(NM_PATH)nm_%.c $(OBJDIR)
 	@gcc $(FLAGS) -o $@ -c $< -I $(LIBPATH) -I $(INC_DIR)
 
-$(OBJDIR)/otool/%.o: $(OTOOL_PATH)ot_%.c
+$(OBJDIR)/otool/%.o: $(OTOOL_PATH)ot_%.c $(OBJDIR)
 	@gcc $(FLAGS) -o $@ -c $< -I $(LIBPATH) -I $(INC_DIR)
 
 all: $(NM) $(OTOOL)
+
+$(OBJDIR):
+	mkdir objs
+	mkdir objs/nm
+	mkdir objs/otool
 
 $(NM): $(NM_OBJS)
 	@make -C $(LIBPATH)
